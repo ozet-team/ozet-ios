@@ -13,6 +13,7 @@
 		4DC8576F26D9FA9900BD267F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4DC8576D26D9FA9900BD267F /* Main.storyboard */; };
 		4DC8577126D9FA9A00BD267F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4DC8577026D9FA9A00BD267F /* Assets.xcassets */; };
 		4DC8577426D9FA9A00BD267F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4DC8577226D9FA9A00BD267F /* LaunchScreen.storyboard */; };
+		C97A23D0B2709F0A8FBA7F30 /* Pods_OZET.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61055456DF783AB8673FF396 /* Pods_OZET.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,9 @@
 		4DC8577026D9FA9A00BD267F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4DC8577326D9FA9A00BD267F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4DC8577526D9FA9A00BD267F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		61055456DF783AB8673FF396 /* Pods_OZET.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OZET.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		77171CCCC4FD6B11AF714613 /* Pods-OZET.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OZET.release.xcconfig"; path = "Target Support Files/Pods-OZET/Pods-OZET.release.xcconfig"; sourceTree = "<group>"; };
+		D3A09C40B2D14C10C226E484 /* Pods-OZET.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OZET.debug.xcconfig"; path = "Target Support Files/Pods-OZET/Pods-OZET.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,17 +35,30 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C97A23D0B2709F0A8FBA7F30 /* Pods_OZET.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		32C4E51E81D27E5420016F08 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				D3A09C40B2D14C10C226E484 /* Pods-OZET.debug.xcconfig */,
+				77171CCCC4FD6B11AF714613 /* Pods-OZET.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		4DC8575B26D9FA9900BD267F = {
 			isa = PBXGroup;
 			children = (
 				4DC8576626D9FA9900BD267F /* OZET */,
 				4DC8576526D9FA9900BD267F /* Products */,
+				32C4E51E81D27E5420016F08 /* Pods */,
+				ABED24818FD5529E6B8EF61A /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -67,6 +84,14 @@
 			path = OZET;
 			sourceTree = "<group>";
 		};
+		ABED24818FD5529E6B8EF61A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				61055456DF783AB8673FF396 /* Pods_OZET.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -74,9 +99,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4DC8577826D9FA9A00BD267F /* Build configuration list for PBXNativeTarget "OZET" */;
 			buildPhases = (
+				5C5D0413709CC89EED5FC4BF /* [CP] Check Pods Manifest.lock */,
 				4DC8576026D9FA9900BD267F /* Sources */,
 				4DC8576126D9FA9900BD267F /* Frameworks */,
 				4DC8576226D9FA9900BD267F /* Resources */,
+				B18EBE04D131D989685ECFBB /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -131,6 +158,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		5C5D0413709CC89EED5FC4BF /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-OZET-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B18EBE04D131D989685ECFBB /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-OZET/Pods-OZET-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-OZET/Pods-OZET-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-OZET/Pods-OZET-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		4DC8576026D9FA9900BD267F /* Sources */ = {
@@ -283,6 +352,7 @@
 		};
 		4DC8577926D9FA9A00BD267F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D3A09C40B2D14C10C226E484 /* Pods-OZET.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -302,6 +372,7 @@
 		};
 		4DC8577A26D9FA9A00BD267F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 77171CCCC4FD6B11AF714613 /* Pods-OZET.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

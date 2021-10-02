@@ -1,4 +1,4 @@
-# Created by https://www.toptal.com/developers/gitignore/api/swift,xcode,cocoapods
+l# Created by https://www.toptal.com/developers/gitignore/api/swift,xcode,cocoapods
 # Edit at https://www.toptal.com/developers/gitignore?templates=swift,xcode,cocoapods
 
 ### CocoaPods ###
@@ -109,5 +109,9 @@ iOSInjectionProject/
 !*.xcodeproj/xcshareddata/
 !*.xcworkspace/contents.xcworkspacedata
 **/xcshareddata/WorkspaceSettings.xcsettings
+
+
+# R.swift
+*.generated.swift
 
 # End of https://www.toptal.com/developers/gitignore/api/swift,xcode,cocoapods
