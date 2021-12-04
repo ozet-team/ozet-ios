@@ -24,4 +24,5 @@ target 'OZET' do
   pod 'ReactorKit'
   pod 'SwiftLint'
   pod 'ReusableKit/RxSwift'
+  pod 'Moya/RxSwift'
 end

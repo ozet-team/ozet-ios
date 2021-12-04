@@ -1,7 +1,13 @@
 PODS:
+  - Alamofire (5.4.4)
   - Differentiator (4.0.1)
   - Kingfisher (7.0.0)
   - lottie-ios (3.2.3)
+  - Moya/Core (14.0.0):
+    - Alamofire (~> 5.0)
+  - Moya/RxSwift (14.0.0):
+    - Moya/Core
+    - RxSwift (~> 5.0)
   - R.swift (5.4.0):
     - R.swift.Library (~> 5.3.0)
   - R.swift.Library (5.3.0)
@@ -38,6 +44,7 @@ PODS:
 DEPENDENCIES:
   - Kingfisher
   - lottie-ios
+  - Moya/RxSwift
   - R.swift
   - ReactorKit
   - ReusableKit/RxSwift
@@ -53,9 +60,11 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - Alamofire
     - Differentiator
     - Kingfisher
     - lottie-ios
+    - Moya
     - R.swift
     - R.swift.Library
     - ReactorKit
@@ -73,9 +82,11 @@ SPEC REPOS:
     - WeakMapTable
 
 SPEC CHECKSUMS:
+  Alamofire: f3b09a368f1582ab751b3fff5460276e0d2cf5c9
   Differentiator: 886080237d9f87f322641dedbc5be257061b0602
   Kingfisher: 5efc54fec3980f92354898532e562cc17f31efb4
   lottie-ios: c058aeafa76daa4cf64d773554bccc8385d0150e
+  Moya: 5b45dacb75adb009f97fde91c204c1e565d31916
   R.swift: c533450b0f7dc494e0993f5f1a1db925d84c3006
   R.swift.Library: 0fc583cb55a99e28901299cc451614cad1161962
   ReactorKit: 6d894a20c3d508344320901cd8e386fde92df4b6
@@ -92,6 +103,6 @@ SPEC CHECKSUMS:
   Then: acfe0be7e98221c6204e12f8161459606d5d822d
   WeakMapTable: 05c694ce8439a7a9ebabb56187287a63c57673d6
 
-PODFILE CHECKSUM: 0c1d69428a23b892ce01e574c274b9e5f5caa927
+PODFILE CHECKSUM: 6f1e3e5af468f7a24e8f03e53dd62f38b33880d6
 
 COCOAPODS: 1.11.2
