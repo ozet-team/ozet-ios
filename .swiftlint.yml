@@ -1,0 +1,5 @@
+excluded:
+  - Pods
+  - OZET/Resource
+  - OZET/Entry
+  - OZET/Plist

@@ -1,0 +1,22 @@
+/* 
+  File.strings
+  OZET
+
+  Created by MK-Mac-255 on 2021/10/02.
+  
+*/
+
+// Common
+"CommonDone" = "완료";
+
+
+// Login
+"LoginButtonSendCode" = "인증번호 발송";
+"LoginPhoneTextFieldTitle" = "휴대전화번호를 입력해주세요";
+"LoginPhonePlaceholder" = "숫자만 입력해주세요";
+"LoginAuthCodeTextFieldTitle" = "인증번호를 입력해주세요";
+"LoginAuthCodePlaceholder" = "000000";
+
+// Name
+"NameTextFieldTitle" = "이름을 입력해주세요";
+"NameTextFieldPlaceholder" = "김오젯";
