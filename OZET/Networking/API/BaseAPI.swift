@@ -10,7 +10,7 @@ import Moya
 
 extension TargetType {
   var baseURL: URL {
-    return URL()!
+    return URL(string: "")!
   }
 
   var sampleData: Data {
