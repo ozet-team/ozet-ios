@@ -1,0 +1,17 @@
+#!/bin/bash
+
+BUILD_CONFIGURATION="${CONFIGURATION}"
+FILE_GOOGLE_SERVICE_INFO="GoogleService-Info.plist"
+
+PATH_SOURCE="${PROJECT_DIR}/${PROJECT_NAME}/"
+PATH_DESTINATION="${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist"
+
+echo "Project Configration: $BUILD_CONFIGURATION"
+
+echo "GoogleService-Info copied."
+PATH_SOURCE+="$FILE_GOOGLE_SERVICE_INFO"
+
+echo "Source: $PATH_SOURCE"
+echo "Destination: $PATH_DESTINATION"
+
+cp "$PATH_SOURCE" "$PATH_DESTINATION"

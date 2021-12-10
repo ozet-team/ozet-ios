@@ -12,6 +12,7 @@ target 'OZET' do
   pod 'RxKeyboard'
   pod 'lottie-ios'
   pod 'SkeletonView'
+  pod 'Texture'
 
   # Misc.
   pod 'Kingfisher'
@@ -25,4 +26,6 @@ target 'OZET' do
   pod 'SwiftLint'
   pod 'ReusableKit/RxSwift'
   pod 'Moya/RxSwift'
+  pod 'Firebase/Analytics'
+  pod 'Firebase/Crashlytics'
 end
