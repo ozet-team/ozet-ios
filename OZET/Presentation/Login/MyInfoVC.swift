@@ -28,9 +28,11 @@ final class MyInfoVC: BaseVC {
 
     self.bottomButton.rx.tap
       .bind { [weak self] in
-        let vc = MainVC()
-        vc.modalPresentationStyle = .fullScreen
-        self?.present(vc, animated: true, completion: nil)
+        let controller = MainVC()
+        let navigationController = UINavigationController(rootViewController: controller)
+        navigationController.modalPresentationStyle = .fullScreen
+        navigationController.isNavigationBarHidden = true
+        self?.present(navigationController, animated: true, completion: nil)
       }
       .disposed(by: self.disposeBag)
   }
