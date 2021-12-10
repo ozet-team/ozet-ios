@@ -21,7 +21,8 @@ let scripts = [
 let baseSettings: [String: SettingValue] = [
   "ENABLE_BITCODE": "NO",
   "CURRENT_PROJECT_VERSION": .projectVersion,
-  "MARKETING_VERSION": .marketingVersion
+  "MARKETING_VERSION": .marketingVersion,
+  "DEVELOPMENT_TEAM": "45R995393Y"
 ]
 
 let settings = Settings.settings(
@@ -33,7 +34,7 @@ let ozet = Target(
   name: "OZET",
   platform: .iOS,
   product: .app,
-  bundleId: "app.ozet.OZET",
+  bundleId: "app.ozet.ios",
   deploymentTarget: .iOS(
     targetVersion: "13.0",
     devices: [.iphone]
