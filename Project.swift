@@ -15,6 +15,18 @@ let scripts = [
   TargetScript.post(
     script: "\"${PODS_ROOT}/SwiftLint/swiftlint\"",
     name: "Swift Lint"
+  ),
+  TargetScript.post(
+    script: "$SRCROOT/$PROJECT_NAME/Script/GoogleService-Info.sh",
+    name: "GoogleService-Info"
+  ),
+  TargetScript.post(
+    script: "\"${PODS_ROOT}/FirebaseCrashlytics/run\"",
+    name: "Firebase Crashlytics",
+    inputPaths: [
+      Path("\"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}\""),
+      Path("\"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)\"")
+    ]
   )
 ]
 
@@ -53,5 +65,8 @@ let project = Project(
   organizationName: "app.OZET",
   targets: [
     ozet
+  ],
+  additionalFiles: [
+    "OZET/GoogleService-Info.plist"
   ]
 )

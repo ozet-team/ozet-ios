@@ -20,7 +20,9 @@ final class WebVC: BaseVC {
   }
 
   // MARK: UI Components
-  private let webView = WKWebView()
+  private let webView = WKWebView().then {
+    $0.scrollView.bounces = false
+  }
 
   private let buttonStackView = UIStackView().then {
     $0.axis = .horizontal
