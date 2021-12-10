@@ -17,6 +17,11 @@ final class MainVC: BaseVC {
   private let secondList = MainRecruitPostListView()
   private let thirdList = MainRecruitPostListView()
 
+  private let testWebViewButton = UIButton().then {
+    $0.setTitle("웹뷰 테스트", for: .normal)
+    $0.setTitleColor(.ozet.black, for: .normal)
+  }
+
   private let logoView = UIImageView().then {
     $0.image = R.image.splashLogo()
     $0.contentMode = .scaleAspectFit
@@ -27,12 +32,14 @@ final class MainVC: BaseVC {
     super.viewDidLoad()
 
     self.configureSubViews()
+    self.bind()
   }
 
   // MARK: Layout
   private func configureSubViews() {
     self.view.addSubview(self.titleView)
     self.view.addSubview(self.containerView)
+    self.view.addSubview(self.testWebViewButton)
 
     self.titleView.addSubview(self.logoView)
 
@@ -67,5 +74,18 @@ final class MainVC: BaseVC {
     self.infoView.snp.makeConstraints { make in
       make.height.equalTo(150)
     }
+
+    self.testWebViewButton.snp.makeConstraints { make in
+      make.top.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(20)
+    }
+  }
+
+  private func bind() {
+    self.testWebViewButton.rx.tap
+      .bind { [weak self] in
+        let webView = WebVC()
+        self?.navigationController?.pushViewController(webView, animated: true)
+      }
+      .disposed(by: self.disposeBag)
   }
 }
