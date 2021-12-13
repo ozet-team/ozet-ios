@@ -9,7 +9,6 @@
 // Common
 "CommonDone" = "완료";
 
-
 // Login
 "LoginButtonSendCode" = "인증번호 발송";
 "LoginPhoneTextFieldTitle" = "휴대전화번호를 입력해주세요";
@@ -20,3 +19,14 @@
 // Name
 "NameTextFieldTitle" = "이름을 입력해주세요";
 "NameTextFieldPlaceholder" = "김오젯";
+
+
+// Resume - Update - Career
+"ResumeUpdateCareerShopNameTitle" = "샵 이름";
+"ResumeUpdateCareerShopNamePlaceHolder" = "근무하신 샵 이름을 적어주세요";
+"ResumeUpdateCareerStartDateTitle" = "근무일";
+"ResumeUpdateCareerEndDateTitle" = "퇴사";
+"ResumeUpdateCareerIsWorking" = "근무중";
+"ResumeUpdateCareerPositionTitle" = "직책";
+"ResumeUpdateCareerPositionPlaceHolder" = "근무하신 샵 내 직책을 선택해주세요";
+"ResumeUpdateCareerProject" = "근무 내용 & 성과";

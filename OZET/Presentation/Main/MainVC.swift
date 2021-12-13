@@ -18,7 +18,12 @@ final class MainVC: BaseVC {
   private let thirdList = MainRecruitPostListView()
 
   private let testWebViewButton = UIButton().then {
-    $0.setTitle("웹뷰 테스트", for: .normal)
+    $0.setTitle("웹뷰", for: .normal)
+    $0.setTitleColor(.ozet.black, for: .normal)
+  }
+
+  private let resumeButton = UIButton().then {
+    $0.setTitle("추가", for: .normal)
     $0.setTitleColor(.ozet.black, for: .normal)
   }
 
@@ -40,6 +45,7 @@ final class MainVC: BaseVC {
     self.view.addSubview(self.titleView)
     self.view.addSubview(self.containerView)
     self.view.addSubview(self.testWebViewButton)
+    self.view.addSubview(self.resumeButton)
 
     self.titleView.addSubview(self.logoView)
 
@@ -77,6 +83,12 @@ final class MainVC: BaseVC {
 
     self.testWebViewButton.snp.makeConstraints { make in
       make.top.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(20)
+      make.width.equalTo(40)
+    }
+
+    self.resumeButton.snp.makeConstraints { make in
+      make.trailing.equalTo(self.testWebViewButton.snp.leading)
+      make.centerY.equalTo(self.testWebViewButton)
     }
   }
 
@@ -85,6 +97,13 @@ final class MainVC: BaseVC {
       .bind { [weak self] in
         let webView = WebVC()
         self?.navigationController?.pushViewController(webView, animated: true)
+      }
+      .disposed(by: self.disposeBag)
+
+    self.resumeButton.rx.tap
+      .bind { [weak self] in
+        let resume = ResumeUpdateVC()
+        self?.navigationController?.pushViewController(resume, animated: true)
       }
       .disposed(by: self.disposeBag)
   }

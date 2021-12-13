@@ -13,6 +13,7 @@ target 'OZET' do
   pod 'lottie-ios'
   pod 'SkeletonView'
   pod 'Texture'
+  pod 'BonMot'
 
   # Misc.
   pod 'Kingfisher'

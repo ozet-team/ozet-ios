@@ -16,7 +16,7 @@ class BaseVC: UIViewController {
   private(set) var didMakeConstraints = false
   var disposeBag = DisposeBag()
 
-  // MARK: Init
+  // MARK: Initializer
   init() {
     super.init(nibName: nil, bundle: nil)
   }

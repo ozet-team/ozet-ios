@@ -16,7 +16,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     guard let windowScene = (scene as? UIWindowScene) else { return }
 
     let window = UIWindow(windowScene: windowScene)
-    window.rootViewController = PhoneAuthVC()
+    let navigationController = UINavigationController(rootViewController: MainVC()).then {
+      $0.isNavigationBarHidden = true
+    }
+    window.rootViewController = navigationController
     self.window = window
     self.window?.makeKeyAndVisible()
   }

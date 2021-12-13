@@ -1,5 +1,6 @@
 PODS:
   - Alamofire (5.4.4)
+  - BonMot (6.0.0)
   - Differentiator (4.0.1)
   - Firebase/Analytics (8.8.0):
     - Firebase/Core
@@ -175,6 +176,7 @@ PODS:
   - WeakMapTable (1.2.0)
 
 DEPENDENCIES:
+  - BonMot
   - Firebase/Analytics
   - Firebase/Crashlytics
   - Kingfisher
@@ -197,6 +199,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Alamofire
+    - BonMot
     - Differentiator
     - Firebase
     - FirebaseAnalytics
@@ -234,6 +237,7 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Alamofire: f3b09a368f1582ab751b3fff5460276e0d2cf5c9
+  BonMot: fb2b6a2209cb3149aca37b7131d49c051c04ae86
   Differentiator: 886080237d9f87f322641dedbc5be257061b0602
   Firebase: 629510f1a9ddb235f3a7c5c8ceb23ba887f0f814
   FirebaseAnalytics: 5506ea8b867d8423485a84b4cd612d279f7b0b8a
@@ -269,6 +273,6 @@ SPEC CHECKSUMS:
   Then: acfe0be7e98221c6204e12f8161459606d5d822d
   WeakMapTable: 05c694ce8439a7a9ebabb56187287a63c57673d6
 
-PODFILE CHECKSUM: 1131b9457c77d626e61f2134f966069d76ac8faf
+PODFILE CHECKSUM: ce43c5d38642b05df2f1e6b4f95e40eed6051bf6
 
 COCOAPODS: 1.11.2

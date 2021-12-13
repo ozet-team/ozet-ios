@@ -28,7 +28,7 @@ final class GuideTextField: BaseView {
     $0.backgroundColor = .ozet.blackWithDark
   }
 
-  // MARK: Init
+  // MARK: Initializer
   init(title: String, placeholder: String, type: UIKeyboardType) {
     super.init(frame: .zero)
     self.configureSubViews()
