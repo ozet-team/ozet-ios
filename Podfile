@@ -23,7 +23,7 @@ target 'OZET' do
   pod 'Then'
   pod 'ReactorKit'
   pod 'SwiftLint'
-  pod 'ReusableKit/RxSwift'
+  pod 'ReusableKit'
   pod 'Moya/RxSwift'
   pod 'Firebase/Analytics'
   pod 'Firebase/Crashlytics'
