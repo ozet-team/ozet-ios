@@ -6,13 +6,25 @@
 //  Copyright © 2021 app.OZET. All rights reserved.
 //
 
-enum ResumeAddType {
+enum ResumeAddType: CaseIterable {
   case career
+  case certification
+  case military
+  case address
+  case introduction
 
   var title: String? {
     switch self {
     case .career:
-      return "경력"
+      return R.string.ozet.resumeUpdateCareerNavigation()
+    case .certification:
+      return R.string.ozet.resumeUpdateCertificationNavigation()
+    case .military:
+      return R.string.ozet.resumeUpdateMilitaryNavigation()
+    case .address:
+      return R.string.ozet.resumeUpdateAddressNavigation()
+    case .introduction:
+      return R.string.ozet.resumeUpdateIntroductionNavigation()
     }
   }
 
@@ -20,25 +32,38 @@ enum ResumeAddType {
     switch self {
     case .career:
       return [
-        .defaultField(.shopName),
+        .defaultField(.careerShopName),
         .dateField(.certificateDate),
-        .selectionField(.careerWork),
-        .multiLineField(.careerWork)
+        .selectionField(.careerPosition),
+        .multiLineField(.careerProject)
+      ]
+    case .certification:
+      return [
+        .defaultField(.certificationName),
+        .dateField(.certificateDate),
+        .defaultField(.certificationAgency)
+      ]
+    case.military:
+      return [
+        .selectionField(.careerPosition),
+        .defaultField(.militaryServiceReason)
+      ]
+    case .address:
+      return [
+        .defaultField(.address)
+      ]
+    case .introduction:
+      return [
+        .multiLineField(.introduction)
       ]
     }
   }
 
   var path: String {
-    switch self {
-    case .career:
-      return "career"
-    }
+    "career"
   }
 
   var requiredKey: [String] {
-    switch self {
-    case .career:
-      return []
-    }
+    []
   }
 }

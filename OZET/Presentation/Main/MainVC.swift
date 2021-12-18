@@ -102,8 +102,23 @@ final class MainVC: BaseVC {
 
     self.resumeButton.rx.tap
       .bind { [weak self] in
-        let vc = AddResumeItemVC(type: .career)
-        self?.navigationController?.pushViewController(vc, animated: true)
+        let alert = UIAlertController(
+          title: "입력폼",
+          message: nil,
+          preferredStyle: .actionSheet
+        )
+        for item in ResumeAddType.allCases {
+          alert.addAction(UIAlertAction(
+            title: item.title,
+            style: .default,
+            handler: { action in
+              let vc = AddResumeItemVC(type: item)
+              self?.navigationController?.pushViewController(vc, animated: true)
+            }
+          ))
+        }
+        alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+        self?.present(alert, animated: true, completion: nil)
       }
       .disposed(by: self.disposeBag)
   }

@@ -9,26 +9,59 @@
 import UIKit
 
 enum ResumeDefaultTextFieldType {
-  case shopName
+  case careerShopName
+  case careerPosition
+  case certificationName
+  case certificationAgency
+  case schoolName
+  case schoolSubjectName
+  case schoolLocation
+  case militaryServiceReason
+  case address
 
   var title: String? {
     switch self {
-    case .shopName:
-      return "샵 이름"
+    case .careerShopName:
+      return R.string.ozet.resumeUpdateCareerShopNameTitle()
+    case .careerPosition:
+      return R.string.ozet.resumeUpdateCareerPositionTitle()
+    case .certificationName:
+      return R.string.ozet.resumeUpdateCertificationNameTitle()
+    case .certificationAgency:
+      return R.string.ozet.resumeUpdateCertificationAgencyTitle()
+    case .schoolName:
+      return R.string.ozet.resumeUpdateSchoolNameTitle()
+    case .schoolSubjectName:
+      return R.string.ozet.resumeUpdateSchoolSubjectNameTitle()
+    case .schoolLocation:
+      return R.string.ozet.resumeUpdateSchoolLocationTitle()
+    case .militaryServiceReason:
+      return R.string.ozet.resumeUpdateMilitaryExemptionReasonTitle()
+    case .address:
+      return R.string.ozet.resumeUpdateAddressTitle()
     }
   }
 
   var placeholder: String? {
     switch self {
-    case .shopName:
-      return "샵 이름을 입력해주세요"
-    }
-  }
-
-  var keyboardType: UIKeyboardType {
-    switch self {
-    case .shopName:
-      return .default
+    case .careerShopName:
+      return R.string.ozet.resumeUpdateCareerShopNamePlaceHolder()
+    case .careerPosition:
+      return R.string.ozet.resumeUpdateCareerPositionPlaceHolder()
+    case .certificationName:
+      return R.string.ozet.resumeUpdateCertificationNamePlaceHolder()
+    case .certificationAgency:
+      return R.string.ozet.resumeUpdateCertificationAgencyPlaceHolder()
+    case .schoolName:
+      return R.string.ozet.resumeUpdateSchoolNamePlaceHolder()
+    case .schoolSubjectName:
+      return R.string.ozet.resumeUpdateSchoolSubjectNamePlaceHolder()
+    case .schoolLocation:
+      return R.string.ozet.resumeUpdateSchoolLocationPlaceHolder()
+    case .militaryServiceReason:
+      return R.string.ozet.resumeUpdateMilitaryExemptionReasonPlaceHolder()
+    case .address:
+      return R.string.ozet.resumeUpdateAddressPlaceHolder()
     }
   }
 }
@@ -59,7 +92,6 @@ final class ResumeDefaultTextField: BaseView, AddResumeAddableComponent {
 
     self.titleLabel.text = type.title
     self.textField.placeholder = type.placeholder
-    self.textField.keyboardType = type.keyboardType
     self.backgroundColor = .ozet.whiteWithDark
   }
 

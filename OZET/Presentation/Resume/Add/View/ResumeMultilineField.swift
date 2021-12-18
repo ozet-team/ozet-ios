@@ -9,19 +9,24 @@
 import UIKit
 
 enum ResumeMultilineFieldType {
-  case careerWork
+  case careerProject
+  case introduction
 
   var title: String? {
     switch self {
-    case .careerWork:
-      return "근무내용 & 성과"
+    case .careerProject:
+      return R.string.ozet.resumeUpdateCareerProjectTitle()
+    case .introduction:
+      return R.string.ozet.resumeUpdateIntroductionTitle()
     }
   }
 
   var placeholder: String? {
     switch self {
-    case .careerWork:
-      return "근무 내용 또는 성과를 입력해주세요"
+    case .careerProject:
+      return R.string.ozet.resumeUpdateCareerProjectPlaceHolder()
+    case .introduction:
+      return R.string.ozet.resumeUpdateIntroductionPlaceHolder()
     }
   }
 }

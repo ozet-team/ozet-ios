@@ -9,19 +9,19 @@
 import UIKit
 
 enum ResumeSelectionFieldType {
-  case careerWork
+  case careerPosition
 
   var title: String? {
     switch self {
-    case .careerWork:
-      return "근무내용 & 성과"
+    case .careerPosition:
+      return R.string.ozet.resumeUpdateCareerPositionTitle()
     }
   }
 
   var placeholder: String? {
     switch self {
-    case .careerWork:
-      return "근무 내용 또는 성과를 입력해주세요"
+    case .careerPosition:
+      return R.string.ozet.resumeUpdateCareerPositionPlaceHolder()
     }
   }
 }
