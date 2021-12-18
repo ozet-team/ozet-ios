@@ -12,8 +12,6 @@ target 'OZET' do
   pod 'RxKeyboard'
   pod 'lottie-ios'
   pod 'SkeletonView'
-  pod 'Texture'
-  pod 'BonMot'
 
   # Misc.
   pod 'Kingfisher'

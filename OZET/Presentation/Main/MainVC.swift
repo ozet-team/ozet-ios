@@ -102,8 +102,7 @@ final class MainVC: BaseVC {
 
     self.resumeButton.rx.tap
       .bind { [weak self] in
-        let resume = ResumeUpdateVC()
-        self?.navigationController?.pushViewController(resume, animated: true)
+        
       }
       .disposed(by: self.disposeBag)
   }
