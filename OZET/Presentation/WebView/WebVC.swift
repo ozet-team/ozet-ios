@@ -100,7 +100,8 @@ extension WebVC: WKScriptMessageHandler {
       self.navigationController?.interactivePopGestureRecognizer?.isEnabled = event.isEnableSwipe ?? true
 
     case .token:
-      self.webView.evaluateJavaScript("window.setAccessToken(string)", completionHandler: nil)
+      let token = "dsdskjsdksdjkdssd"
+      self.webView.evaluateJavaScript("window.setAccessToken(\"\(token)\")", completionHandler: nil)
     }
   }
 }
