@@ -18,12 +18,13 @@ final class WebVC: BaseVC {
   // MARK: Constants
   private enum Constants {
     static let base = "https://hybrid.ozet.app/#/list/all?_si=1"
-    static let interface = "app"
+    static let interface = "callbackHandler"
   }
 
   private enum WebRequest: String {
     case back = "back"
     case swipe = "isEnableSwipe"
+    case token = "token"
   }
 
   private struct WebEvent: Decodable {
@@ -32,17 +33,19 @@ final class WebVC: BaseVC {
   }
 
   // MARK: UI Components
-  private let webView: WKWebView
+  private var webView: WKWebView!
 
   // MARK: Initializer
   override init() {
+    super.init()
+
     let configuration = WKWebViewConfiguration()
     let controller = WKUserContentController()
+    controller.add(self, name: Constants.interface)
     configuration.userContentController = controller
     self.webView = WKWebView(frame: .zero, configuration: configuration).then {
       $0.scrollView.bounces = false
     }
-    super.init()
   }
 
   required init?(coder: NSCoder) {
@@ -63,11 +66,6 @@ final class WebVC: BaseVC {
   }
 
   private func configureWebView() {
-    self.webView.configuration.userContentController.add(
-      self,
-      name: Constants.interface
-    )
-
     if let url = URL(string: Constants.base) {
       self.webView.load(URLRequest(url: url))
     }
@@ -94,13 +92,15 @@ extension WebVC: WKScriptMessageHandler {
     else {
       return
     }
-
     switch eventType {
     case .back:
       self.navigationController?.popViewController(animated: true)
 
     case .swipe:
       self.navigationController?.interactivePopGestureRecognizer?.isEnabled = event.isEnableSwipe ?? true
+
+    case .token:
+      self.webView.evaluateJavaScript("window.setAccessToken(string)", completionHandler: nil)
     }
   }
 }

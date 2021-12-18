@@ -13,7 +13,7 @@ final class ScrollableStackView: BaseScrollView {
     $0.axis = .vertical
   }
 
-  // MARK: Init
+  // MARK: Initializer
   init(spacing: CGFloat) {
     super.init(frame: .zero)
     self.stackView.spacing = spacing

@@ -135,6 +135,7 @@ PODS:
   - SnapKit (5.0.1)
   - SwiftLint (0.45.1)
   - Then (2.7.0)
+  - TouchAreaInsets (1.1.0)
   - WeakMapTable (1.2.0)
 
 DEPENDENCIES:
@@ -155,6 +156,7 @@ DEPENDENCIES:
   - SnapKit
   - SwiftLint
   - Then
+  - TouchAreaInsets
 
 SPEC REPOS:
   trunk:
@@ -188,6 +190,7 @@ SPEC REPOS:
     - SnapKit
     - SwiftLint
     - Then
+    - TouchAreaInsets
     - WeakMapTable
 
 SPEC CHECKSUMS:
@@ -221,8 +224,9 @@ SPEC CHECKSUMS:
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   SwiftLint: 06ac37e4d38c7068e0935bb30cda95f093bec761
   Then: acfe0be7e98221c6204e12f8161459606d5d822d
+  TouchAreaInsets: eb1ad705965a142a30a9c6a3405bec5e46d8613b
   WeakMapTable: 05c694ce8439a7a9ebabb56187287a63c57673d6
 
-PODFILE CHECKSUM: 3f1812a6bd02462327759ebb10ed07cb952586be
+PODFILE CHECKSUM: 03333fc22fc88eb2c6f4525eb3c01f55a3e6cce6
 
 COCOAPODS: 1.11.2
