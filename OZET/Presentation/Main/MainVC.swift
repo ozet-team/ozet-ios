@@ -19,12 +19,17 @@ final class MainVC: BaseVC {
 
   private let testWebViewButton = UIButton().then {
     $0.setTitle("웹뷰", for: .normal)
-    $0.setTitleColor(.ozet.black, for: .normal)
+    $0.setTitleColor(.ozet.blackWithDark, for: .normal)
   }
 
   private let resumeButton = UIButton().then {
     $0.setTitle("추가", for: .normal)
-    $0.setTitleColor(.ozet.black, for: .normal)
+    $0.setTitleColor(.ozet.blackWithDark, for: .normal)
+  }
+
+  private let listButton = UIButton().then {
+    $0.setTitle("이력서", for: .normal)
+    $0.setTitleColor(.ozet.blackWithDark, for: .normal)
   }
 
   private let logoView = UIImageView().then {
@@ -46,6 +51,7 @@ final class MainVC: BaseVC {
     self.view.addSubview(self.containerView)
     self.view.addSubview(self.testWebViewButton)
     self.view.addSubview(self.resumeButton)
+    self.view.addSubview(self.listButton)
 
     self.titleView.addSubview(self.logoView)
 
@@ -90,6 +96,11 @@ final class MainVC: BaseVC {
       make.trailing.equalTo(self.testWebViewButton.snp.leading)
       make.centerY.equalTo(self.testWebViewButton)
     }
+
+    self.listButton.snp.makeConstraints { make in
+      make.trailing.equalTo(self.resumeButton.snp.leading)
+      make.centerY.equalTo(self.resumeButton)
+    }
   }
 
   private func bind() {
@@ -97,6 +108,13 @@ final class MainVC: BaseVC {
       .bind { [weak self] in
         let webView = WebVC()
         self?.navigationController?.pushViewController(webView, animated: true)
+      }
+      .disposed(by: self.disposeBag)
+
+    self.listButton.rx.tap
+      .bind { [weak self] in
+        let vc = ResumeListVC()
+        self?.navigationController?.pushViewController(vc, animated: true)
       }
       .disposed(by: self.disposeBag)
 

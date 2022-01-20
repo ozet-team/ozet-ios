@@ -19,5 +19,6 @@ extension UIColor {
     let gray1 = R.color.gray1()!
     let gray2 = R.color.gray2()!
     let gray3 = R.color.gray3()!
+    let gray4 = R.color.gray4()!
   }
 }

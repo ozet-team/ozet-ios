@@ -40,7 +40,7 @@ final class ResumeMultilineField: BaseView, AddResumeAddableComponent {
 
   private let textView = UITextView().then {
     $0.font = .ozet.body1
-    $0.textColor = .ozet.gray3
+    $0.textColor = .ozet.gray2
     $0.textContainer.lineFragmentPadding = 0
     $0.textContainerInset = .zero
     $0.tintColor = .ozet.purple
@@ -97,7 +97,7 @@ extension ResumeMultilineField: UITextViewDelegate {
    func textViewDidEndEditing(_ textView: UITextView) {
      if textView.text.isEmpty {
        textView.text = self.type.placeholder
-       textView.textColor = .ozet.gray3
+       textView.textColor = .ozet.gray2
      }
    }
 }

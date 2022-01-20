@@ -13,6 +13,7 @@ target 'OZET' do
   pod 'lottie-ios'
   pod 'SkeletonView'
   pod 'TouchAreaInsets'
+  pod 'FloatingPanel'
 
   # Misc.
   pod 'Kingfisher'

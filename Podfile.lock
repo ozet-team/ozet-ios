@@ -50,6 +50,7 @@ PODS:
     - GoogleUtilities/Environment (~> 7.6)
     - GoogleUtilities/UserDefaults (~> 7.6)
     - PromisesObjC (< 3.0, >= 1.2)
+  - FloatingPanel (2.5.1)
   - GoogleAppMeasurement (8.10.0):
     - GoogleAppMeasurement/AdIdSupport (= 8.10.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.6)
@@ -141,6 +142,7 @@ PODS:
 DEPENDENCIES:
   - Firebase/Analytics
   - Firebase/Crashlytics
+  - FloatingPanel
   - Kingfisher
   - lottie-ios
   - Moya/RxSwift
@@ -168,6 +170,7 @@ SPEC REPOS:
     - FirebaseCoreDiagnostics
     - FirebaseCrashlytics
     - FirebaseInstallations
+    - FloatingPanel
     - GoogleAppMeasurement
     - GoogleDataTransport
     - GoogleUtilities
@@ -202,6 +205,7 @@ SPEC CHECKSUMS:
   FirebaseCoreDiagnostics: 56fb7216d87e0e6ec2feddefa9d8a392fe8b2c18
   FirebaseCrashlytics: 3b7f17cdf5bf1ae6ad5956696a6c26edeb39cca7
   FirebaseInstallations: 830327b45345ffc859eaa9c17bcd5ae893fd5425
+  FloatingPanel: 523cb50f490f151fc03fabf24a8322e44d22f65f
   GoogleAppMeasurement: a3311dbcf3ea651e5a070fe8559b57c174ada081
   GoogleDataTransport: 629c20a4d363167143f30ea78320d5a7eb8bd940
   GoogleUtilities: 684ee790a24f73ebb2d1d966e9711c203f2a4237
@@ -227,6 +231,6 @@ SPEC CHECKSUMS:
   TouchAreaInsets: eb1ad705965a142a30a9c6a3405bec5e46d8613b
   WeakMapTable: 05c694ce8439a7a9ebabb56187287a63c57673d6
 
-PODFILE CHECKSUM: 03333fc22fc88eb2c6f4525eb3c01f55a3e6cce6
+PODFILE CHECKSUM: 3f2a4a919fb8cc36c86e1b706474676e986d87b2
 
 COCOAPODS: 1.11.2

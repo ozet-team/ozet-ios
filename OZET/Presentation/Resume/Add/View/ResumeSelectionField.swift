@@ -8,6 +8,29 @@
 
 import UIKit
 
+import RxSwift
+import RxCocoa
+
+enum CareerPosition: SelectableItem, CaseIterable {
+  case intern
+  case manager
+  case designer
+  case owner
+
+  var name: String {
+    switch self {
+    case .manager:
+      return "매니저"
+    case .designer:
+      return "디자이너"
+    case .intern:
+      return "인턴(스텝)"
+    case .owner:
+      return "원장"
+    }
+  }
+}
+
 enum ResumeSelectionFieldType {
   case careerPosition
 
@@ -24,6 +47,16 @@ enum ResumeSelectionFieldType {
       return R.string.ozet.resumeUpdateCareerPositionPlaceHolder()
     }
   }
+
+  var options: [SelectableItem] {
+    return CareerPosition.allCases
+  }
+}
+
+extension Reactive where Base: ResumeSelectionField {
+  var tap: ControlEvent<Void> {
+    base.button.rx.tap
+  }
 }
 
 final class ResumeSelectionField: BaseView, AddResumeAddableComponent {
@@ -33,8 +66,8 @@ final class ResumeSelectionField: BaseView, AddResumeAddableComponent {
     $0.font = .ozet.subtitle1
   }
 
-  private let button = UIButton().then {
-    $0.setTitleColor(.ozet.gray3, for: .normal)
+  fileprivate let button = UIButton().then {
+    $0.setTitleColor(.ozet.gray2, for: .normal)
     $0.contentEdgeInsets = UIEdgeInsets(top: 17, left: 15, bottom: 17, right: 15)
     $0.titleLabel?.font = .ozet.body1
     $0.contentHorizontalAlignment = .left
@@ -70,13 +103,16 @@ final class ResumeSelectionField: BaseView, AddResumeAddableComponent {
   override func makeConstraints() {
     super.makeConstraints()
 
+    self.snp.makeConstraints { make in
+      make.height.equalTo(74)
+    }
+
     self.titleLabel.snp.makeConstraints { make in
       make.leading.equalToSuperview().inset(20)
       make.top.equalToSuperview()
     }
 
     self.button.snp.makeConstraints { make in
-      make.top.equalTo(self.titleLabel.snp.bottom).offset(20)
       make.leading.trailing.equalToSuperview().inset(20)
       make.bottom.equalToSuperview()
     }

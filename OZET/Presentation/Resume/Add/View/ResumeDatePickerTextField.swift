@@ -26,26 +26,14 @@ final class ResumeDatePickerTextField: BaseView, AddResumeAddableComponent {
     $0.font = .ozet.subtitle1
   }
 
-  private let textFieldContainer = UIView().then {
-    $0.layer.borderColor = UIColor.ozet.black.withAlphaComponent(0.05).cgColor
-    $0.layer.borderWidth = 1
-    $0.layer.cornerRadius = 8
-  }
-
-  private let textField = UITextField().then {
-    $0.font = .ozet.body1
-    $0.textColor = .ozet.blackWithDark
-    $0.tintColor = .ozet.purple
-  }
+  private let dateField = DatePickerTextField()
 
   // MARK: Initializer
   init(type: ResumeDatePickerTextFieldType) {
     super.init(frame: .zero)
     self.configureSubViews()
-    self.configureKeyboard()
-
+    
     self.titleLabel.text = type.title
-    self.textField.placeholder = "YYYY. MM. DD"
     self.backgroundColor = .ozet.whiteWithDark
   }
 
@@ -56,8 +44,7 @@ final class ResumeDatePickerTextField: BaseView, AddResumeAddableComponent {
   // MARK: Layout
   private func configureSubViews() {
     self.addSubview(self.titleLabel)
-    self.addSubview(self.textFieldContainer)
-    self.textFieldContainer.addSubview(self.textField)
+    self.addSubview(self.dateField)
   }
 
   override func makeConstraints() {
@@ -72,34 +59,9 @@ final class ResumeDatePickerTextField: BaseView, AddResumeAddableComponent {
       make.top.equalToSuperview()
     }
 
-    self.textFieldContainer.snp.makeConstraints { make in
-      make.leading.trailing.equalToSuperview().inset(20)
+    self.dateField.snp.makeConstraints { make in
+      make.leading.trailing.equalToSuperview()
       make.bottom.equalToSuperview()
-      make.height.equalTo(52)
     }
-
-    self.textField.snp.makeConstraints { make in
-      make.leading.trailing.equalToSuperview().inset(15)
-      make.top.bottom.equalToSuperview().inset(17)
-    }
-  }
-
-  // MARK: Configuration
-  private func configureKeyboard() {
-    let datePicker = UIDatePicker().then {
-      $0.datePickerMode = .date
-      $0.addTarget(self, action: #selector(handleDatePicker), for: .valueChanged)
-      if #available(iOS 13.4, *) {
-        $0.preferredDatePickerStyle = .wheels
-      }
-    }
-    self.textField.tintColor = .clear
-    self.textField.inputView = datePicker
-  }
-
-  @objc private func handleDatePicker(_ datePicker: UIDatePicker) {
-    let formatter = DateFormatter()
-    formatter.dateFormat = "YYYY. MM. dd"
-    self.textField.text = formatter.string(from: datePicker.date)
   }
 }

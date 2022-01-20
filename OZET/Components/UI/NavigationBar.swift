@@ -33,7 +33,7 @@ class NavigationBar: BaseView {
   }
 
   // MARK: Init
-  init(title: String?) {
+  init(title: String? = nil) {
     super.init(frame: .zero)
     self.titleLabel.text = title
     self.configureSubView()

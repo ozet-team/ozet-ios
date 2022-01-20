@@ -9,6 +9,7 @@
 enum ResumeAddType: CaseIterable {
   case career
   case certification
+  case school
   case military
   case address
   case introduction
@@ -19,6 +20,8 @@ enum ResumeAddType: CaseIterable {
       return R.string.ozet.resumeUpdateCareerNavigation()
     case .certification:
       return R.string.ozet.resumeUpdateCertificationNavigation()
+    case .school:
+      return R.string.ozet.resumeUpdateSchoolNavigation()
     case .military:
       return R.string.ozet.resumeUpdateMilitaryNavigation()
     case .address:
@@ -33,7 +36,7 @@ enum ResumeAddType: CaseIterable {
     case .career:
       return [
         .defaultField(.careerShopName),
-        .dateField(.certificateDate),
+        .dateRangeField(.careerDuration),
         .selectionField(.careerPosition),
         .multiLineField(.careerProject)
       ]
@@ -42,6 +45,13 @@ enum ResumeAddType: CaseIterable {
         .defaultField(.certificationName),
         .dateField(.certificateDate),
         .defaultField(.certificationAgency)
+      ]
+    case .school:
+      return [
+        .defaultField(.schoolName),
+        .defaultField(.schoolSubjectName),
+        .dateRangeField(.schoolDuration),
+        .defaultField(.schoolLocation)
       ]
     case.military:
       return [

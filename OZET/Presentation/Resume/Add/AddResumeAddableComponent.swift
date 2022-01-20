@@ -15,6 +15,7 @@ protocol AddResumeAddableComponent: BaseView {
 enum ResumeAddableType {
   case defaultField(ResumeDefaultTextFieldType)
   case dateField(ResumeDatePickerTextFieldType)
+  case dateRangeField(ResumeDateRangeFieldType)
   case multiLineField(ResumeMultilineFieldType)
   case selectionField(ResumeSelectionFieldType)
 
@@ -24,6 +25,8 @@ enum ResumeAddableType {
       return ResumeDefaultTextField(type: type)
     case .dateField(let type):
       return ResumeDatePickerTextField(type: type)
+    case .dateRangeField(let type):
+      return ResumeDateRangeField(type: type)
     case .multiLineField(let type):
       return ResumeMultilineField(type: type)
     case .selectionField(let type):

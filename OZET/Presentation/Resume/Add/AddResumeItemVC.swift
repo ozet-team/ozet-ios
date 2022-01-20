@@ -53,7 +53,19 @@ final class AddResumeItemVC: BaseVC {
 
   private func configureType() {
     for component in self.type.components {
-      self.stackView.addStackView([component.view])
+      switch component {
+      case .selectionField(let resumeSelectionFieldType):
+        guard let view = component.view as? ResumeSelectionField else { return }
+        view.rx.tap
+          .withUnretained(self)
+          .bind { (self, _ ) in
+            self.presentBottomSheet(options: resumeSelectionFieldType.options)
+          }
+          .disposed(by: self.disposeBag)
+        self.stackView.addStackView([view])
+      default:
+        self.stackView.addStackView([component.view])
+      }
     }
   }
 
@@ -90,5 +102,16 @@ final class AddResumeItemVC: BaseVC {
         self.navigationController?.popViewController(animated: true)
       }
       .disposed(by: self.disposeBag)
+  }
+
+  // MARK: Presentaion
+  private func presentBottomSheet(options: [SelectableItem]) {
+    let controller = SelectionBottomSheetViewController(
+      title: "직급 선택",
+      items: options,
+      selectedItem: nil
+    )
+    let bottomSheet = BottomSheetViewController(contentViewController: controller)
+    self.present(bottomSheet, animated: true, completion: nil)
   }
 }
