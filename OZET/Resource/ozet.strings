@@ -8,7 +8,8 @@
 
 // Common
 "CommonDone" = "완료";
-
+"CommonYearMonth" = "YYYY. MM";
+"CommonYearMonthDay" = "YYYY. MM. DD";
 
 // Login
 "LoginButtonSendCode" = "인증번호 발송";
@@ -20,3 +21,60 @@
 // Name
 "NameTextFieldTitle" = "이름을 입력해주세요";
 "NameTextFieldPlaceholder" = "김오젯";
+
+
+// Resume - Update - Career
+"ResumeUpdateCareerNavigation" = "경력";
+"ResumeUpdateCareerShopNameTitle" = "샵 이름";
+"ResumeUpdateCareerShopNamePlaceHolder" = "근무하신 샵 이름을 입력해주세요";
+"ResumeUpdateCareerStartDateTitle" = "근무일";
+"ResumeUpdateCareerEndDateTitle" = "퇴사";
+"ResumeUpdateCareerIsWorking" = "근무중";
+"ResumeUpdateCareerPositionTitle" = "직책";
+"ResumeUpdateCareerPositionPlaceHolder" = "근무하신 샵 내 직책을 선택해주세요";
+"ResumeUpdateCareerProjectTitle" = "근무 내용 & 성과";
+"ResumeUpdateCareerProjectPlaceHolder" = "근무 내용 또는 성과를 입력해주세요";
+
+// Resume - Update - Certification
+"ResumeUpdateCertificationNavigation" = "자격증";
+"ResumeUpdateCertificationNameTitle" = "자격증 이름";
+"ResumeUpdateCertificationNamePlaceHolder" = "자격증 이름을 입력해주세요";
+"ResumeUpdateCertificationDateTitle" = "자격증 취득일";
+"ResumeUpdateCertificationAgencyTitle" = "자격증 발급기관";
+"ResumeUpdateCertificationAgencyPlaceHolder" = "자격증 발급기관을 입력해주세요";
+
+// Resume - Update - School
+"ResumeUpdateSchoolNavigation" = "학력";
+"ResumeUpdateSchoolNameTitle" = "학교명";
+"ResumeUpdateSchoolNamePlaceHolder" = "학교명을 기재해주세요";
+"ResumeUpdateSchoolSubjectNameTitle" = "학과명";
+"ResumeUpdateSchoolSubjectNamePlaceHolder" = "학과명을 기재해주세요";
+"ResumeUpdateSchoolSubjectNamePlaceHolder" = "학과명을 기재해주세요";
+"ResumeUpdateSchoolDurationTitle" = "재학 기간";
+"ResumeUpdateSchoolIsStudying" = "재학중";
+"ResumeUpdateSchoolLocationTitle" = "학교 소재지";
+"ResumeUpdateSchoolLocationPlaceHolder" = "학교 소재지를 입력해주세요";
+
+// Resume - Update - Military
+"ResumeUpdateMilitaryNavigation" = "병역";
+"ResumeUpdateMilitaryType" = "병역 구분";
+"ResumeUpdateMilitaryFinish" = "군필";
+"ResumeUpdateMilitaryNotFinish" = "미필";
+"ResumeUpdateMilitaryExemption" = "면제";
+"ResumeUpdateMilitaryNone" = "해당없음";
+"ResumeUpdateMilitaryDurationTitle" = "복무 기간";
+"ResumeUpdateMilitaryExemptionReasonTitle" = "면제 사유";
+"ResumeUpdateMilitaryExemptionReasonPlaceHolder" = "면제 사유를 입력해주세요";
+
+// Resume - Update - Address
+"ResumeUpdateAddressNavigation" = "주소";
+"ResumeUpdateAddressTitle" = "주소";
+"ResumeUpdateAddressPlaceHolder" = "주소를 입력해주세요";
+
+// Resume - Update - Self-Introduction
+"ResumeUpdateIntroductionNavigation" = "자기소개";
+"ResumeUpdateIntroductionTitle" = "자기소개";
+"ResumeUpdateIntroductionPlaceHolder" = "자기소개를 입력해주세요";
+
+
+

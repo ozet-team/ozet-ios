@@ -15,30 +15,41 @@ import RxKeyboard
 
 final class WebVC: BaseVC {
 
+  // MARK: Constants
   private enum Constants {
     static let base = "https://hybrid.ozet.app/#/list/all?_si=1"
+    static let interface = "callbackHandler"
+  }
+
+  private enum WebRequest: String {
+    case back = "back"
+    case swipe = "isEnableSwipe"
+    case token = "token"
+  }
+
+  private struct WebEvent: Decodable {
+    let event: String
+    let isEnableSwipe: Bool?
   }
 
   // MARK: UI Components
-  private let webView = WKWebView().then {
-    $0.scrollView.bounces = false
+  private var webView: WKWebView!
+
+  // MARK: Initializer
+  override init() {
+    super.init()
+
+    let configuration = WKWebViewConfiguration()
+    let controller = WKUserContentController()
+    controller.add(self, name: Constants.interface)
+    configuration.userContentController = controller
+    self.webView = WKWebView(frame: .zero, configuration: configuration).then {
+      $0.scrollView.bounces = false
+    }
   }
 
-  private let buttonStackView = UIStackView().then {
-    $0.axis = .horizontal
-    $0.spacing = 10
-  }
-
-  private let closeButton = UIButton().then {
-    $0.setTitle("닫기", for: .normal)
-    $0.setTitleColor(.black, for: .normal)
-  }
-  private let searchTextField = UITextField().then {
-    $0.alpha = 0.5
-    $0.layer.cornerRadius = 5
-    $0.layer.borderColor = UIColor.ozet.black.cgColor
-    $0.layer.borderWidth = 1
-    $0.text = Constants.base
+  required init?(coder: NSCoder) {
+    fatalError()
   }
 
   // MARK: Life Cycle
@@ -47,18 +58,11 @@ final class WebVC: BaseVC {
 
     self.configureSubViews()
     self.configureWebView()
-    self.configureKeyboard()
-    self.bind()
-
   }
 
-  // MARK: Layout
+  // MARK: Configure
   private func configureSubViews() {
     self.view.addSubview(self.webView)
-
-    self.view.addSubview(self.buttonStackView)
-    self.buttonStackView.addArrangedSubview(self.searchTextField)
-    self.buttonStackView.addArrangedSubview(self.closeButton)
   }
 
   private func configureWebView() {
@@ -67,47 +71,37 @@ final class WebVC: BaseVC {
     }
   }
 
-  private func configureKeyboard() {
-    RxKeyboard.instance.visibleHeight
-      .throttle(0.3)
-      .drive { [weak self] height in
-        guard let self = self else { return }
-        self.webView.snp.updateConstraints { make in
-          make.bottom.equalToSuperview().inset(height)
-        }
-      }
-      .disposed(by: self.disposeBag)
-  }
-
   override func makeConstraints() {
     super.makeConstraints()
 
     self.webView.snp.makeConstraints { make in
       make.edges.equalToSuperview()
     }
-
-    self.buttonStackView.snp.makeConstraints { make in
-      make.leading.trailing.equalToSuperview().inset(20)
-      make.height.equalTo(50)
-      make.bottom.equalTo(self.webView).inset(50)
-    }
   }
+}
 
-  // MARK: Bind
-  private func bind() {
-    self.closeButton.rx.tap
-      .bind { [weak self] in
-        self?.navigationController?.popViewController(animated: true)
-      }
-      .disposed(by: self.disposeBag)
+extension WebVC: WKScriptMessageHandler {
+  func userContentController(
+    _ userContentController: WKUserContentController,
+    didReceive message: WKScriptMessage
+  ) {
+    guard let body = message.body as? String,
+          let data = body.data(using: .utf8),
+          let event = try? JSONDecoder().decode(WebEvent.self, from: data),
+          let eventType = WebRequest(rawValue: event.event)
+    else {
+      return
+    }
+    switch eventType {
+    case .back:
+      self.navigationController?.popViewController(animated: true)
 
-    self.searchTextField.rx.controlEvent(.editingDidEndOnExit)
-      .map { self.searchTextField.text }
-      .bind { [weak self] url in
-        if let request = URL(string: url ?? "") {
-          self?.webView.load(URLRequest(url: request))
-        }
-      }
-      .disposed(by: self.disposeBag)
+    case .swipe:
+      self.navigationController?.interactivePopGestureRecognizer?.isEnabled = event.isEnableSwipe ?? true
+
+    case .token:
+      let token = "dsdskjsdksdjkdssd"
+      self.webView.evaluateJavaScript("window.setAccessToken(\"\(token)\")", completionHandler: nil)
+    }
   }
 }

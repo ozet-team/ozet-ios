@@ -10,7 +10,7 @@ import Moya
 
 extension TargetType {
   var baseURL: URL {
-    return URL(string: "")!
+    return URL(string: "https://api-staging.ozet.app/api/v1/")!
   }
 
   var sampleData: Data {

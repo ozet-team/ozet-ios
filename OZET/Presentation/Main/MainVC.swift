@@ -18,8 +18,18 @@ final class MainVC: BaseVC {
   private let thirdList = MainRecruitPostListView()
 
   private let testWebViewButton = UIButton().then {
-    $0.setTitle("웹뷰 테스트", for: .normal)
-    $0.setTitleColor(.ozet.black, for: .normal)
+    $0.setTitle("웹뷰", for: .normal)
+    $0.setTitleColor(.ozet.blackWithDark, for: .normal)
+  }
+
+  private let resumeButton = UIButton().then {
+    $0.setTitle("추가", for: .normal)
+    $0.setTitleColor(.ozet.blackWithDark, for: .normal)
+  }
+
+  private let listButton = UIButton().then {
+    $0.setTitle("이력서", for: .normal)
+    $0.setTitleColor(.ozet.blackWithDark, for: .normal)
   }
 
   private let logoView = UIImageView().then {
@@ -40,6 +50,8 @@ final class MainVC: BaseVC {
     self.view.addSubview(self.titleView)
     self.view.addSubview(self.containerView)
     self.view.addSubview(self.testWebViewButton)
+    self.view.addSubview(self.resumeButton)
+    self.view.addSubview(self.listButton)
 
     self.titleView.addSubview(self.logoView)
 
@@ -77,6 +89,17 @@ final class MainVC: BaseVC {
 
     self.testWebViewButton.snp.makeConstraints { make in
       make.top.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(20)
+      make.width.equalTo(40)
+    }
+
+    self.resumeButton.snp.makeConstraints { make in
+      make.trailing.equalTo(self.testWebViewButton.snp.leading)
+      make.centerY.equalTo(self.testWebViewButton)
+    }
+
+    self.listButton.snp.makeConstraints { make in
+      make.trailing.equalTo(self.resumeButton.snp.leading)
+      make.centerY.equalTo(self.resumeButton)
     }
   }
 
@@ -85,6 +108,35 @@ final class MainVC: BaseVC {
       .bind { [weak self] in
         let webView = WebVC()
         self?.navigationController?.pushViewController(webView, animated: true)
+      }
+      .disposed(by: self.disposeBag)
+
+    self.listButton.rx.tap
+      .bind { [weak self] in
+        let vc = ResumeListVC()
+        self?.navigationController?.pushViewController(vc, animated: true)
+      }
+      .disposed(by: self.disposeBag)
+
+    self.resumeButton.rx.tap
+      .bind { [weak self] in
+        let alert = UIAlertController(
+          title: "입력폼",
+          message: nil,
+          preferredStyle: .actionSheet
+        )
+        for item in ResumeAddType.allCases {
+          alert.addAction(UIAlertAction(
+            title: item.title,
+            style: .default,
+            handler: { action in
+              let vc = AddResumeItemVC(type: item)
+              self?.navigationController?.pushViewController(vc, animated: true)
+            }
+          ))
+        }
+        alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+        self?.present(alert, animated: true, completion: nil)
       }
       .disposed(by: self.disposeBag)
   }
