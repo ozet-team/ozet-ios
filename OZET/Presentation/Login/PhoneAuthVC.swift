@@ -7,7 +7,11 @@
 
 import UIKit
 
-final class PhoneAuthVC: BaseVC {
+import ReactorKit
+import RxSwift
+import RxCocoa
+
+final class PhoneAuthVC: BaseVC, View {
   // MARK: UI Components
   private let bottomButton = BottomButton().then {
     $0.text = R.string.ozet.loginButtonSendCode()
@@ -33,18 +37,22 @@ final class PhoneAuthVC: BaseVC {
     $0.alpha = 0
     $0.layer.zPosition = 0
   }
-
+  
+  // MARK: Init
+  init(reactor: PhoneAuthReactor) {
+    super.init()
+    self.reactor = reactor
+  }
+  
+  required init?(coder: NSCoder) {
+    fatalError()
+  }
+  
   // MARK: Life Cycle
   override func viewDidLoad() {
     super.viewDidLoad()
 
     self.configureSubViews()
-
-    self.bottomButton.rx.tap
-      .bind { [weak self] in
-        self?.presentAuthCodeView()
-      }
-      .disposed(by: self.disposeBag)
   }
 
   override func viewDidAppear(_ animated: Bool) {
@@ -52,25 +60,64 @@ final class PhoneAuthVC: BaseVC {
 
     self.phoneTextField.becomeFirstResponder()
   }
+  
+  // MARK: Bind
+  func bind(reactor: PhoneAuthReactor) {
+    self.input(reactor: reactor)
+    self.output(reactor: reactor)
+  }
+  
+  private func input(reactor: PhoneAuthReactor) {
+    self.bottomButton.rx.tap
+      .map { .nextProgress }
+      .bind(to: reactor.action)
+      .disposed(by: self.disposeBag)
+    
+    self.phoneTextField.rx.textUpdated
+      .map { .updatePhone($0) }
+      .bind(to: reactor.action)
+      .disposed(by: self.disposeBag)
+    
+    self.authCodeTextField.rx.textUpdated
+      .map { .updateAuthCode($0) }
+      .bind(to: reactor.action)
+      .disposed(by: self.disposeBag)
+  }
+  
+  private func output(reactor: PhoneAuthReactor) {
+    reactor.state.map(\.editState)
+      .distinctUntilChanged()
+      .bind { [weak self] state in
+        self?.updateState(state: state)
+      }
+      .disposed(by: self.disposeBag)
+    
+    reactor.state.map(\.isCompleteLogin)
+      .filter { $0 }
+      .bind { [weak self] _ in
+        self?.presentUserInfo()
+      }
+      .disposed(by: self.disposeBag)
+  }
 
   // MARK: Presentaion
   private func presentAuthCodeView() {
-    if self.authCodeTextField.isHidden {
-      UIViewPropertyAnimator.runningPropertyAnimator(
-        withDuration: 0.5,
-        delay: 0,
-        options: [.curveEaseOut]) {
-          self.authCodeTextField.isHidden = false
-          self.authCodeTextField.alpha = 1
-          self.contentStackView.layoutIfNeeded()
-        } completion: { _ in
-          self.authCodeTextField.becomeFirstResponder()
-        }
-    } else {
-      let infoVC = MyInfoVC()
-      infoVC.modalPresentationStyle = .fullScreen
-      self.present(infoVC, animated: true, completion: nil)
-    }
+    UIViewPropertyAnimator.runningPropertyAnimator(
+      withDuration: 0.5,
+      delay: 0,
+      options: [.curveEaseOut]) {
+        self.authCodeTextField.isHidden = false
+        self.authCodeTextField.alpha = 1
+        self.contentStackView.layoutIfNeeded()
+      } completion: { _ in
+        self.authCodeTextField.becomeFirstResponder()
+      }
+  }
+  
+  private func presentUserInfo() {
+    let infoVC = MyInfoVC()
+    infoVC.modalPresentationStyle = .fullScreen
+    self.present(infoVC, animated: true, completion: nil)
   }
 
   // MARK: Layout
@@ -89,6 +136,15 @@ final class PhoneAuthVC: BaseVC {
     self.contentStackView.snp.makeConstraints { make in
       make.top.equalToSuperview().inset(100)
       make.leading.trailing.equalToSuperview().inset(20)
+    }
+  }
+  
+  private func updateState(state: PhoneAuthState) {
+    self.bottomButton.text = state.buttonTitle
+    self.bottomButton.isEnabled = state.isNextPrograssEnable
+    
+    if state == .typingAuthCode {
+      self.presentUserInfo()
     }
   }
 }

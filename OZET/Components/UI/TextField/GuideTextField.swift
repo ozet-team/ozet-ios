@@ -7,6 +7,17 @@
 
 import UIKit
 
+import RxSwift
+import RxCocoa
+
+extension Reactive where Base: GuideTextField {
+  var textUpdated: ControlEvent<String?> {
+    let event = self.base.textField.rx.controlEvent(.editingChanged)
+      .withLatestFrom(self.base.textField.rx.text)
+    return ControlEvent(events: event)
+  }
+}
+
 final class GuideTextField: BaseView {
   // MARK: UI Components
   private let titleLabel = UILabel().then {
@@ -14,7 +25,7 @@ final class GuideTextField: BaseView {
     $0.font = .systemFont(ofSize: 16)
   }
 
-  private let textField = UITextField().then {
+  fileprivate let textField = UITextField().then {
     $0.textColor = .ozet.blackWithDark
     $0.tintColor = .ozet.blackWithDark
     $0.font = .systemFont(ofSize: 16)

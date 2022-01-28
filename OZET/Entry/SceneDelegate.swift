@@ -16,11 +16,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     guard let windowScene = (scene as? UIWindowScene) else { return }
 
     let window = UIWindow(windowScene: windowScene)
-    let navigationController = UINavigationController(rootViewController: MainVC()).then {
-      $0.isNavigationBarHidden = true
-      $0.interactivePopGestureRecognizer?.delegate = nil
-    }
-    window.rootViewController = navigationController
+    window.rootViewController = PhoneAuthVC(reactor: PhoneAuthReactor())
     self.window = window
     self.window?.makeKeyAndVisible()
   }
