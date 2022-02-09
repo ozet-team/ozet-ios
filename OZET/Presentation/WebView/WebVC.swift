@@ -25,6 +25,7 @@ final class WebVC: BaseVC {
     case back = "back"
     case swipe = "isEnableSwipe"
     case token = "token"
+    case login = "login"
   }
 
   private struct WebEvent: Decodable {
@@ -78,6 +79,27 @@ final class WebVC: BaseVC {
       make.edges.equalToSuperview()
     }
   }
+  
+  // MARK: Event
+  private func sendToken() {
+    guard let token = UserDefaults.standard.string(forKey: "token") else { return }
+    self.webView.evaluateJavaScript("window.setAccessToken(\"\(token)\")", completionHandler: nil)
+  }
+  
+  // MARK: Present
+  private func presentLogin() {
+    let reactor = PhoneAuthReactor(
+      userService: UserServiceImpl(
+        userProvider: UserProvider()
+      )
+    )
+    let vc = PhoneAuthVC(reactor: reactor) {
+      self.sendToken()
+    }
+    let navigation = UINavigationController(rootViewController: vc)
+    navigation.isNavigationBarHidden = true
+    self.present(navigation, animated: true, completion: nil)
+  }
 }
 
 extension WebVC: WKScriptMessageHandler {
@@ -100,8 +122,10 @@ extension WebVC: WKScriptMessageHandler {
       self.navigationController?.interactivePopGestureRecognizer?.isEnabled = event.isEnableSwipe ?? true
 
     case .token:
-      let token = "dsdskjsdksdjkdssd"
-      self.webView.evaluateJavaScript("window.setAccessToken(\"\(token)\")", completionHandler: nil)
+      self.sendToken()
+      
+    case .login:
+      self.presentLogin()
     }
   }
 }

@@ -12,5 +12,7 @@ typealias ResumeProvider = RequestProvider<ResumeAPI>
 typealias UserProvider = RequestProvider<UserAPI>
 
 final class RequestProvider<Target: TargetType>: MoyaProvider<Target> {
-  
+  init() {
+    super.init(plugins: [NetworkLoggerPlugin()])
+  }
 }

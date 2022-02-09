@@ -29,4 +29,5 @@ target 'OZET' do
   pod 'Moya/RxSwift'
   pod 'Firebase/Analytics'
   pod 'Firebase/Crashlytics'
+  pod 'SwiftDate'
 end

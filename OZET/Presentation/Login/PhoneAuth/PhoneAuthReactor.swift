@@ -44,9 +44,9 @@ final class PhoneAuthReactor: Reactor {
   enum Mutation {
     case setPhoneNumber(String?)
     case setAuthCode(String?)
-    case setCompleteLogin(Bool)
-    case setRequestAuthCode
-    case setCheckAuthCode(Bool)
+    case setCompleteLogin(LoginResponse)
+    case setRequestAuthCode(Date?)
+    case setError(String)
   }
   
   struct State {
@@ -54,14 +54,18 @@ final class PhoneAuthReactor: Reactor {
     var phoneNumber: String?
     var authCode: String?
     var isCompleteLogin = false
+    var isNeedUserName = false
+    var expireTime: Date?
+    var isNeedAlert: String?
   }
   
   // MARK: Properties
   var initialState: State = State()
+  private let userService: UserService
   
   // MARK: Init
-  init() {
-    
+  init(userService: UserService) {
+    self.userService = userService
   }
   
   func mutate(action: Action) -> Observable<Mutation> {
@@ -88,6 +92,7 @@ final class PhoneAuthReactor: Reactor {
   
   func reduce(state: State, mutation: Mutation) -> State {
     var newState = state
+    newState.isNeedAlert = nil
     
     switch mutation {
     case .setPhoneNumber(let phone):
@@ -104,23 +109,32 @@ final class PhoneAuthReactor: Reactor {
       } else {
         newState.editState = .typingAuthCode
       }
-    case .setCompleteLogin(let isComplete):
-      newState.isCompleteLogin = isComplete
-    case .setRequestAuthCode:
+    case .setCompleteLogin(let response):
+      newState.isCompleteLogin = response.user.name != nil
+      newState.isNeedUserName = response.user.name == nil
+    case .setRequestAuthCode(let expiredAt):
+      newState.expireTime = expiredAt
       newState.editState = .typingAuthCode
       newState.authCode = nil
-    case .setCheckAuthCode(let result):
-      newState.isCompleteLogin = result
+    case .setError(let error):
+      newState.isNeedAlert = error
     }
-    
     return newState
   }
   
   private func requestAuthCode(phone: String) -> Observable<Mutation> {
-    .just(.setRequestAuthCode)
+    self.userService.requestAuthCode(phone: phone)
+      .map { .setRequestAuthCode($0) }
+      .catchAndReturn(.setError("메세지 전송에 실패했습니다\n다시시도 해주세요"))
   }
   
   private func checkAuthCode(phone: String, code: String) -> Observable<Mutation> {
-    .just(.setCompleteLogin(true))
+    self.userService.sendAuthCode(phone: phone, code: code)
+      .map { .setCompleteLogin($0) }
+      .catchAndReturn(.setError("로그인에 실패했습니다\n다시시도 해주세요"))
+  }
+  
+  func makeMyInfoReactor() -> MyInfoReactor {
+    MyInfoReactor(userService: self.userService)
   }
 }

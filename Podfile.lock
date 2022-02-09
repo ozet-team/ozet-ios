@@ -134,6 +134,7 @@ PODS:
     - RxSwift (~> 6.0)
   - SkeletonView (1.26.0)
   - SnapKit (5.0.1)
+  - SwiftDate (6.3.1)
   - SwiftLint (0.45.1)
   - Then (2.7.0)
   - TouchAreaInsets (1.1.0)
@@ -156,6 +157,7 @@ DEPENDENCIES:
   - RxViewController
   - SkeletonView
   - SnapKit
+  - SwiftDate
   - SwiftLint
   - Then
   - TouchAreaInsets
@@ -191,6 +193,7 @@ SPEC REPOS:
     - RxViewController
     - SkeletonView
     - SnapKit
+    - SwiftDate
     - SwiftLint
     - Then
     - TouchAreaInsets
@@ -226,11 +229,12 @@ SPEC CHECKSUMS:
   RxViewController: 56486fa0afd629a1d6b5ba077f3b8cd9dc31b5d2
   SkeletonView: 6b62a8ddbc64abb113ea3243e4a9979e5750f147
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
+  SwiftDate: 72d28954e8e1c6c1c0f917ccc8005e4f83c7d4b2
   SwiftLint: 06ac37e4d38c7068e0935bb30cda95f093bec761
   Then: acfe0be7e98221c6204e12f8161459606d5d822d
   TouchAreaInsets: eb1ad705965a142a30a9c6a3405bec5e46d8613b
   WeakMapTable: 05c694ce8439a7a9ebabb56187287a63c57673d6
 
-PODFILE CHECKSUM: 3f2a4a919fb8cc36c86e1b706474676e986d87b2
+PODFILE CHECKSUM: 4afca7b61fe91b5a76dcf53b9e9ef74d3280be0f
 
 COCOAPODS: 1.11.2

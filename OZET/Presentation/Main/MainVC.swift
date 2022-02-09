@@ -31,6 +31,11 @@ final class MainVC: BaseVC {
     $0.setTitle("이력서", for: .normal)
     $0.setTitleColor(.ozet.blackWithDark, for: .normal)
   }
+  
+  private let loginButton = UIButton().then {
+    $0.setTitle("로그인", for: .normal)
+    $0.setTitleColor(.ozet.blackWithDark, for: .normal)
+  }
 
   private let logoView = UIImageView().then {
     $0.image = R.image.splashLogo()
@@ -52,6 +57,7 @@ final class MainVC: BaseVC {
     self.view.addSubview(self.testWebViewButton)
     self.view.addSubview(self.resumeButton)
     self.view.addSubview(self.listButton)
+    self.view.addSubview(self.loginButton)
 
     self.titleView.addSubview(self.logoView)
 
@@ -101,6 +107,11 @@ final class MainVC: BaseVC {
       make.trailing.equalTo(self.resumeButton.snp.leading)
       make.centerY.equalTo(self.resumeButton)
     }
+    
+    self.loginButton.snp.makeConstraints { make in
+      make.trailing.equalTo(self.listButton.snp.leading)
+      make.centerY.equalTo(self.listButton)
+    }
   }
 
   private func bind() {
@@ -137,6 +148,22 @@ final class MainVC: BaseVC {
         }
         alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
         self?.present(alert, animated: true, completion: nil)
+      }
+      .disposed(by: self.disposeBag)
+    
+    self.loginButton.rx.tap
+      .bind { [weak self] _ in
+        let reactor = PhoneAuthReactor(
+          userService: UserServiceImpl(
+            userProvider: UserProvider()
+          )
+        )
+        let vc = PhoneAuthVC(reactor: reactor) {
+          
+        }
+        let navigation = UINavigationController(rootViewController: vc)
+        navigation.isNavigationBarHidden = true
+        self?.present(navigation, animated: true, completion: nil)
       }
       .disposed(by: self.disposeBag)
   }

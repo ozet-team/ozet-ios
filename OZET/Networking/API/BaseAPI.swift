@@ -18,6 +18,9 @@ extension TargetType {
   }
 
   var headers: [String: String]? {
+    if let token = UserDefaults.standard.string(forKey: "token") {
+      return ["authorization": "JWT " + token]
+    }
     return nil
   }
 }

@@ -11,6 +11,7 @@ import Moya
 enum UserAPI: TargetType {
   case authSMS(phone: String, code: String)
   case sendSMS(phone: String)
+  case updateName(name: String)
 
   var path: String {
     switch self {
@@ -18,7 +19,10 @@ enum UserAPI: TargetType {
       return "member/auth/passcode/request"
 
     case .authSMS:
-       return "member/auth/passcode"
+      return "member/auth/passcode/"
+      
+    case .updateName:
+      return "member/user/me/"
     }
   }
 
@@ -29,6 +33,9 @@ enum UserAPI: TargetType {
 
     case .authSMS:
       return .post
+      
+    case .updateName:
+      return .patch
     }
   }
 
@@ -46,6 +53,12 @@ enum UserAPI: TargetType {
           "phoneNumber": phone,
           "passcode": code
         ],
+        encoding: JSONEncoding.default
+      )
+      
+    case .updateName(let name):
+      return .requestParameters(
+        parameters: ["name": name],
         encoding: JSONEncoding.default
       )
     }
