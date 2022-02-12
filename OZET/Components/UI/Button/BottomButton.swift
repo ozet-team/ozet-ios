@@ -10,7 +10,7 @@ import RxKeyboard
 import RxSwift
 import RxCocoa
 
-class BottomButton: BaseButton {
+final class BottomButton: BaseButton {
   // MARK: Constants
   private enum Metric {
     static let buttonCornerRadius: CGFloat = 11
@@ -48,7 +48,6 @@ class BottomButton: BaseButton {
   // MARK: Configuration
   private func configureKeyboard() {
     RxKeyboard.instance.willShowVisibleHeight
-      .skip(1)
       .drive { [weak self] height in
         self?.updateState(height: height, isAnimation: true)
       }

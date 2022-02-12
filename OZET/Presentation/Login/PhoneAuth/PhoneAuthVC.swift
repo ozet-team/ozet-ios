@@ -74,8 +74,10 @@ final class PhoneAuthVC: BaseVC, View {
 
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
-
-    self.phoneTextField.becomeFirstResponder()
+    
+    DispatchQueue.main.async {
+      self.phoneTextField.becomeFirstResponder()
+    }
   }
   
   // MARK: Bind

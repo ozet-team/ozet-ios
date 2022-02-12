@@ -68,6 +68,10 @@ final class GuideTextField: BaseView {
       }
       .disposed(by: self.disposeBag)
   }
+  
+  override func becomeFirstResponder() -> Bool {
+    self.textField.becomeFirstResponder()
+  }
 
   // MARK: Layout
   private func configureSubViews() {
