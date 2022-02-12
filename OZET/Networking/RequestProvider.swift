@@ -10,6 +10,7 @@ import Moya
 
 typealias ResumeProvider = RequestProvider<ResumeAPI>
 typealias UserProvider = RequestProvider<UserAPI>
+typealias AnnouncementProvider = RequestProvider<AnnouncementAPI>
 
 final class RequestProvider<Target: TargetType>: MoyaProvider<Target> {
   init() {

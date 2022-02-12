@@ -15,6 +15,16 @@ extension Reactive where Base: MainRecruitPostListView {
   var tapMore: ControlEvent<Void> {
     self.base.moreButton.rx.tap
   }
+  
+  var tapItem: ControlEvent<IndexPath> {
+    self.base.collectionView.rx.itemSelected
+  }
+  
+  var items: Binder<[Announcement]> {
+    Binder(self.base) { base, items in
+      base.items = items
+    }
+  }
 }
 
 enum MainRecruitPostType {
@@ -49,7 +59,7 @@ final class MainRecruitPostListView: BaseView {
     $0.titleLabel?.font = .systemFont(ofSize: 13)
   }
 
-  private let collectionView = UICollectionView(
+  fileprivate let collectionView = UICollectionView(
     frame: .zero,
     collectionViewLayout: UICollectionViewFlowLayout().then({
       $0.scrollDirection = .horizontal
@@ -59,6 +69,13 @@ final class MainRecruitPostListView: BaseView {
     $0.backgroundColor = .clear
     $0.showsHorizontalScrollIndicator = false
     $0.contentInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+  }
+  
+  // MARK: Property
+  fileprivate var items = [Announcement]() {
+    didSet {
+      self.collectionView.reloadData()
+    }
   }
 
   // MARK: Init
@@ -112,7 +129,7 @@ extension MainRecruitPostListView: UICollectionViewDataSource, UICollectionViewD
     _ collectionView: UICollectionView,
     numberOfItemsInSection section: Int
   ) -> Int {
-    10
+    self.items.count
   }
 
   func collectionView(
@@ -120,7 +137,7 @@ extension MainRecruitPostListView: UICollectionViewDataSource, UICollectionViewD
     cellForItemAt indexPath: IndexPath
   ) -> UICollectionViewCell {
     let cell = collectionView.dequeue(Reusable.cell, for: indexPath)
-
+    cell.configure(item: self.items[indexPath.item])
     return cell
   }
 

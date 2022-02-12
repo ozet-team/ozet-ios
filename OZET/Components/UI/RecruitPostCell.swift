@@ -26,7 +26,6 @@ final class RecruitPostCell: BaseCollectionViewCell {
 
   private let titleLabel = UILabel().then {
     $0.font = .systemFont(ofSize: 14)
-    $0.text = "차홍아르더 도산대로 디자이너 채용공고"
     $0.textColor = .ozet.blackWithDark
     $0.numberOfLines = 2
   }
@@ -34,13 +33,11 @@ final class RecruitPostCell: BaseCollectionViewCell {
   private let shopLabel = UILabel().then {
     $0.font = .systemFont(ofSize: 12)
     $0.textColor = .ozet.gray3
-    $0.text = "차홍 아르더"
   }
 
   private let localLabel = UILabel().then {
     $0.font = .systemFont(ofSize: 12)
     $0.textColor = .ozet.gray3
-    $0.text = "서울 강남구"
   }
 
   // MARK: Init
@@ -51,6 +48,14 @@ final class RecruitPostCell: BaseCollectionViewCell {
 
   required init?(coder aDecoder: NSCoder) {
     fatalError("")
+  }
+  
+  // MARK: Configure
+  func configure(item: Announcement) {
+    self.titleLabel.text = item.title
+    self.shopLabel.text = item.shopName
+    let locationComponents = item.shopLocation.components(separatedBy: " ")
+    self.localLabel.text = locationComponents[0...1].joined(separator: " ")
   }
 
   // MARK: Layout

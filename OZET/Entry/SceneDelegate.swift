@@ -16,7 +16,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     guard let windowScene = (scene as? UIWindowScene) else { return }
 
     let window = UIWindow(windowScene: windowScene)
-    let controller = MainVC()
+    let reactor = MainReactor(
+      announcementService: AnnouncementServiceImpl(
+        provider: AnnouncementProvider()
+      )
+    )
+    let controller = MainVC(reactor: reactor)
     let navigationController = UINavigationController(rootViewController: controller)
     navigationController.modalPresentationStyle = .fullScreen
     navigationController.isNavigationBarHidden = true

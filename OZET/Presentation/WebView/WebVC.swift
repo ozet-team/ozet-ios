@@ -13,11 +13,28 @@ import RxCocoa
 import RxSwift
 import RxKeyboard
 
+enum WebViewType {
+  case all
+  case recommend
+  case detail(id: Int)
+  
+  var path: String {
+    switch self {
+    case .all:
+      return "/list/all"
+    case .recommend:
+      return "/list/recommend"
+    case .detail(let id):
+      return "/recruitment/detail/\(id)"
+    }
+  }
+}
+
 final class WebVC: BaseVC {
 
   // MARK: Constants
   private enum Constants {
-    static let base = "https://hybrid.ozet.app/#/list/all?_si=1"
+    static let base = "https://hybrid.ozet.app"
     static let interface = "callbackHandler"
   }
 
@@ -40,8 +57,8 @@ final class WebVC: BaseVC {
   private let path: String!
 
   // MARK: Initializer
-  init(url: String) {
-    self.path = url
+  init(type: WebViewType) {
+    self.path = Constants.base + type.path
     super.init()
     let configuration = WKWebViewConfiguration()
     let controller = WKUserContentController()
@@ -70,7 +87,7 @@ final class WebVC: BaseVC {
   }
 
   private func configureWebView() {
-    if let url = URL(string: Constants.base) {
+    if let url = URL(string: self.path) {
       self.webView.load(URLRequest(url: url))
     }
   }
