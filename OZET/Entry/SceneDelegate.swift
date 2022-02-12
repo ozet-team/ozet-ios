@@ -20,6 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     let navigationController = UINavigationController(rootViewController: controller)
     navigationController.modalPresentationStyle = .fullScreen
     navigationController.isNavigationBarHidden = true
+    navigationController.interactivePopGestureRecognizer?.delegate = nil
     
     window.rootViewController = navigationController
     self.window = window

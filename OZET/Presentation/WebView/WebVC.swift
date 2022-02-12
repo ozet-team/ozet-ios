@@ -23,7 +23,7 @@ final class WebVC: BaseVC {
 
   private enum WebRequest: String {
     case back = "back"
-    case swipe = "isEnableSwipe"
+    case swipe = "swipe"
     case token = "token"
     case login = "login"
   }
@@ -35,11 +35,14 @@ final class WebVC: BaseVC {
 
   // MARK: UI Components
   private var webView: WKWebView!
+  
+  // MARK: Property
+  private let path: String!
 
   // MARK: Initializer
-  override init() {
+  init(url: String) {
+    self.path = url
     super.init()
-
     let configuration = WKWebViewConfiguration()
     let controller = WKUserContentController()
     controller.add(self, name: Constants.interface)

@@ -6,7 +6,30 @@
 //
 
 import UIKit
+
+import RxCocoa
+import RxSwift
 import ReusableKit
+
+extension Reactive where Base: MainRecruitPostListView {
+  var tapMore: ControlEvent<Void> {
+    self.base.moreButton.rx.tap
+  }
+}
+
+enum MainRecruitPostType {
+  case all
+  case recommend
+  
+  var title: String {
+    switch self {
+    case .all:
+      return "모든 공고"
+    case .recommend:
+      return "추천 공고"
+    }
+  }
+}
 
 final class MainRecruitPostListView: BaseView {
   // MARK: Constants
@@ -16,12 +39,11 @@ final class MainRecruitPostListView: BaseView {
 
   // MARK: UI Components
   private let titleLabel = UILabel().then {
-    $0.text = "추천공고"
     $0.textColor = .ozet.blackWithDark
     $0.font = .systemFont(ofSize: 16, weight: .bold)
   }
 
-  private let moreButton = UIButton().then {
+  fileprivate let moreButton = UIButton().then {
     $0.setTitleColor(.ozet.blackWithDark, for: .normal)
     $0.setTitle("더보기", for: .normal)
     $0.titleLabel?.font = .systemFont(ofSize: 13)
@@ -40,9 +62,10 @@ final class MainRecruitPostListView: BaseView {
   }
 
   // MARK: Init
-  init() {
+  init(type: MainRecruitPostType) {
     super.init(frame: .zero)
 
+    self.titleLabel.text = type.title
     self.configureSubViews()
     self.configureCollectionView()
   }

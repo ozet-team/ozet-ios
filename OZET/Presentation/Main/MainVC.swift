@@ -13,14 +13,8 @@ final class MainVC: BaseVC {
   private let titleView = UIView()
   private let infoView = UIView()
   private let containerView = ScrollableStackView(spacing: 30)
-  private let firstList = MainRecruitPostListView()
-  private let secondList = MainRecruitPostListView()
-  private let thirdList = MainRecruitPostListView()
-
-  private let testWebViewButton = UIButton().then {
-    $0.setTitle("웹뷰", for: .normal)
-    $0.setTitleColor(.ozet.blackWithDark, for: .normal)
-  }
+  private let allList = MainRecruitPostListView(type: .all)
+  private let recommend = MainRecruitPostListView(type: .recommend)
 
   private let resumeButton = UIButton().then {
     $0.setTitle("추가", for: .normal)
@@ -54,7 +48,6 @@ final class MainVC: BaseVC {
   private func configureSubViews() {
     self.view.addSubview(self.titleView)
     self.view.addSubview(self.containerView)
-    self.view.addSubview(self.testWebViewButton)
     self.view.addSubview(self.resumeButton)
     self.view.addSubview(self.listButton)
     self.view.addSubview(self.loginButton)
@@ -63,9 +56,8 @@ final class MainVC: BaseVC {
 
     self.containerView.addStackView([
       self.infoView,
-      self.firstList,
-      self.secondList,
-      self.thirdList
+      self.allList,
+      self.recommend
     ])
   }
 
@@ -93,14 +85,8 @@ final class MainVC: BaseVC {
       make.height.equalTo(150)
     }
 
-    self.testWebViewButton.snp.makeConstraints { make in
-      make.top.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(20)
-      make.width.equalTo(40)
-    }
-
     self.resumeButton.snp.makeConstraints { make in
-      make.trailing.equalTo(self.testWebViewButton.snp.leading)
-      make.centerY.equalTo(self.testWebViewButton)
+      make.top.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(20)
     }
 
     self.listButton.snp.makeConstraints { make in
@@ -115,10 +101,17 @@ final class MainVC: BaseVC {
   }
 
   private func bind() {
-    self.testWebViewButton.rx.tap
+    self.allList.rx.tapMore
       .bind { [weak self] in
-        let webView = WebVC()
-        self?.navigationController?.pushViewController(webView, animated: true)
+        let vc = WebVC(url: "list/all")
+        self?.navigationController?.pushViewController(vc, animated: true)
+      }
+      .disposed(by: self.disposeBag)
+    
+    self.recommend.rx.tapMore
+      .bind { [weak self] in
+        let vc = WebVC(url: "list/recommend")
+        self?.navigationController?.pushViewController(vc, animated: true)
       }
       .disposed(by: self.disposeBag)
 
