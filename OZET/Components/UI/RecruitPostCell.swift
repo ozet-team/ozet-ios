@@ -14,7 +14,6 @@ final class RecruitPostCell: BaseCollectionViewCell {
   // MARK: UI Components
   private let thumbnailImageView = UIImageView().then {
     $0.contentMode = .scaleAspectFill
-    $0.image = R.image.testImage()
     $0.layer.cornerRadius = 4
     $0.clipsToBounds = true
   }
@@ -52,6 +51,13 @@ final class RecruitPostCell: BaseCollectionViewCell {
   
   // MARK: Configure
   func configure(item: Announcement) {
+    let thumbnailIndex = item.id%3
+    let thumbnail = [
+      R.image.thumbnail1(),
+      R.image.thumbnail2(),
+      R.image.thumbnail3()
+    ]
+    self.thumbnailImageView.image = thumbnail[thumbnailIndex]
     self.titleLabel.text = item.title
     self.shopLabel.text = item.shopName
     let locationComponents = item.shopLocation.components(separatedBy: " ")

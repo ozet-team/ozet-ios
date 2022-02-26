@@ -25,6 +25,7 @@ final class ResumeListDefaultAddCell: BaseTableViewCell {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
 
     self.selectionStyle = .none
+    self.backgroundColor = .clear
     self.configureSubviews()
   }
 

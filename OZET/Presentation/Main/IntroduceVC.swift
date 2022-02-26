@@ -37,7 +37,7 @@ final class IntroduceVC: BaseVC {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    self.view.backgroundColor = .ozet.white
+    self.view.backgroundColor = UIColor(white: 249/255, alpha: 1)
     self.bottomButton.setTitleColor(.ozet.purple, for: .normal)
     self.configureSubViews()
     self.configureButton()
@@ -104,9 +104,10 @@ final class IntroduceVC: BaseVC {
     }
     
     self.introductionImageView.snp.makeConstraints { make in
-      make.edges.equalToSuperview()
+      make.top.bottom.equalToSuperview().inset(50)
+      make.leading.trailing.equalToSuperview()
       make.width.equalToSuperview()
-      make.height.equalTo(self.view.snp.width).multipliedBy(5.94)
+      make.height.equalTo(self.view.snp.width).multipliedBy(5.53)
     }
   }
 }
