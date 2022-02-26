@@ -9,18 +9,20 @@
 import UIKit
 
 import ReusableKit
+import ReactorKit
 import RxSwift
 import RxCocoa
 import RxKeyboard
 import RxDataSources
 
-final class ResumeListVC: BaseVC {
+final class ResumeListVC: BaseVC, View {
 
   // MARK: Constants
 
   private enum Reusable {
     static let defaultCell = ReusableCell<ResumeListDefaultCell>()
     static let defaultAddCell = ReusableCell<ResumeListDefaultAddCell>()
+    static let multilineCell = ReusableCell<ResumeListMultilineCell>()
     static let headerView = ReusableView<ResumeListSectionHeaderView>()
   }
 
@@ -31,47 +33,37 @@ final class ResumeListVC: BaseVC {
     $0.separatorStyle = .none
     $0.sectionHeaderHeight = 40
     $0.backgroundColor = .clear
+    $0.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 100, right: 0)
     $0.register(Reusable.defaultCell)
     $0.register(Reusable.defaultAddCell)
+    $0.register(Reusable.multilineCell)
     $0.register(Reusable.headerView)
   }
 
   private let headerView = ResumeListHeaderView()
+  
+  private let dataSource = RxTableViewSectionedReloadDataSource<ResumeListData> { _, tableView, indexPath, item in
+    switch item {
+    case .defaultItem(let item):
+      return tableView.dequeue(Reusable.defaultCell, for: indexPath).then {
+        $0.configure(item: item)
+      }
 
-  // MARK: Mock Data
-  private let data = [
-    ResumeListData(title: "경력", items: [
-      .defaultItem(ResumeDefaultItem(id: 1, name: "샵 이름이 보여집니다 길어지면은 자동으로 줄여지겠지???", date: "2000.00.00"))
-    ]),
-    ResumeListData(title: "자격증", items: [
-      .defaultItem(ResumeDefaultItem(id: 2, name: "미용자격증", date: "2000.00.00")),
-      .defaultItem(ResumeDefaultItem(id: 25, name: "점장자격증", date: "2000.00.00"))
-    ]),
-    ResumeListData(title: "병역", items: [
-      .defaultItem(ResumeDefaultItem(id: 3, name: "컬리페이", date: "2022.01.01 ~ 2025.03.01"))
-    ]),
-    ResumeListData(title: "주소", items: [
-      .defaultItem(ResumeDefaultItem(id: 4, name: "서울시 동대문구 장안동", date: nil))
-    ]),
-    ResumeListData(title: "자기소개", items: [
-      .addItem
-    ]),
-    ResumeListData(title: "인스타그램", items: [
-      .addItem
-    ])
-  ]
+    case .addItem:
+      return tableView.dequeue(Reusable.defaultAddCell, for: indexPath)
+      
+    case .multilineItem(let content):
+      return tableView.dequeue(Reusable.multilineCell, for: indexPath).then {
+        $0.configure(content: content)
+      }
+    }
+  }
 
   // MARK: Initializer
-  override init() {
+  init(reactor: ResumeListReactor) {
     self.navigationBar = NavigationBar()
     super.init()
-
-    self.navigationBar.rx.tapBack
-      .withUnretained(self)
-      .bind { (self, _) in
-        self.navigationController?.popViewController(animated: true)
-      }
-      .disposed(by: self.disposeBag)
+    self.reactor = reactor
   }
 
   required init?(coder: NSCoder) {
@@ -110,22 +102,6 @@ final class ResumeListVC: BaseVC {
 
     self.tableView.rx.setDelegate(self)
       .disposed(by: self.disposeBag)
-
-    let dataSource = RxTableViewSectionedAnimatedDataSource<ResumeListData> { _, tableView, indexPath, item in
-      switch item {
-      case .defaultItem(let item):
-        return tableView.dequeue(Reusable.defaultCell, for: indexPath).then {
-          $0.configure(item: item)
-        }
-
-      case .addItem:
-        return tableView.dequeue(Reusable.defaultAddCell, for: indexPath)
-      }
-    }
-
-    Observable.just(self.data)
-      .bind(to: self.tableView.rx.items(dataSource: dataSource))
-      .disposed(by: self.disposeBag)
   }
 
   // MARK: Layout
@@ -143,12 +119,33 @@ final class ResumeListVC: BaseVC {
   }
 
   // MARK: Bind
-  private func input() {
+  func bind(reactor: ResumeListReactor) {
+    self.input(reactor: reactor)
+    self.output(reactor: reactor)
+  }
+  
+  private func input(reactor: ResumeListReactor) {
     self.navigationBar.rx.tapBack
       .withUnretained(self)
       .bind { (self, _) in
         self.navigationController?.popViewController(animated: true)
       }
+      .disposed(by: self.disposeBag)
+    
+    self.rx.viewWillAppear
+      .map { _ in .loadResume }
+      .bind(to: reactor.action)
+      .disposed(by: self.disposeBag)
+  }
+  
+  private func output(reactor: ResumeListReactor) {
+    reactor.state.map(\.data)
+      .bind(to: self.tableView.rx.items(dataSource: self.dataSource))
+      .disposed(by: self.disposeBag)
+    
+    reactor.state.map(\.userInfo)
+      .compactMap { $0 }
+      .bind(to: self.headerView.rx.userInfo)
       .disposed(by: self.disposeBag)
   }
 }
@@ -159,22 +156,31 @@ extension ResumeListVC: UITableViewDelegate {
     _ tableView: UITableView,
     viewForHeaderInSection section: Int
   ) -> UIView? {
-    tableView.dequeue(Reusable.headerView)?.then {
-      $0.configure(title: self.data[section].title)
+    guard !self.dataSource.sectionModels.isEmpty
+    else {
+      return nil
     }
+    let title = self.dataSource[section].type.title
+    let headerView = tableView.dequeue(Reusable.headerView)
+    headerView?.configure(title: title)
+    return headerView
   }
 
   func tableView(
     _ tableView: UITableView,
     heightForRowAt indexPath: IndexPath
   ) -> CGFloat {
-    let item = self.data[indexPath.section].items[indexPath.item]
+    let item = self.dataSource[indexPath.section].items[indexPath.item]
+    let width = tableView.frame.width
     switch item {
     case .defaultItem:
       return 80
 
     case .addItem:
       return 68
+      
+    case .multilineItem(let content):
+      return ResumeListMultilineCell.getHeight(content: content, width: width)
     }
   }
 }

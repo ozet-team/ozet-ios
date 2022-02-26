@@ -8,37 +8,29 @@
 
 import RxDataSources
 
-struct ResumeDefaultItem: Equatable {
-  let id: Int
-  let name: String?
-  let date: String?
+protocol ResumeDefaultItem {
+  var id: Int { get }
+  var title: String? { get }
+  var date: String? { get }
 }
 
-enum ResumeListItem: Equatable, IdentifiableType {
+enum ResumeListItem {
   case defaultItem(ResumeDefaultItem)
+  case multilineItem(String)
   case addItem
-
-  var identity: Int {
-    0
-  }
 }
 
 struct ResumeListData {
-  var title: String?
+  var type: ResumeType
   var items: [Item]
 }
 
-extension ResumeListData: AnimatableSectionModelType {
-  typealias Identity = String
+extension ResumeListData: SectionModelType {
   typealias Item = ResumeListItem
-
-  var identity: String {
-    "resume"
-  }
 
   init(original: ResumeListData, items: [Item]) {
     self = original
-    self.items = items.isEmpty ? [.addItem] : items
+    self.items = items
   }
 }
 

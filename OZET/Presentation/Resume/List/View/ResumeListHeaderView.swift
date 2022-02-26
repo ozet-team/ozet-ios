@@ -8,6 +8,17 @@
 
 import UIKit
 
+import RxSwift
+import RxCocoa
+
+extension Reactive where Base: ResumeListHeaderView {
+  var userInfo: Binder<User> {
+    Binder(self.base) { base, user in
+      base.configure(user: user)
+    }
+  }
+}
+
 final class ResumeListHeaderView: BaseView {
 
   // MARK: Constants
@@ -48,23 +59,32 @@ final class ResumeListHeaderView: BaseView {
     super.init(frame: .zero)
 
     self.configureSubViews()
-
-    self.contentStackView.addArrangedSubview(
-      ResumeListHeaderContentView(title: "이름", content: "조유미")
-    )
-    self.contentStackView.addArrangedSubview(
-      ResumeListHeaderContentView(title: "전화번호", content: "01083292719")
-    )
-    self.contentStackView.addArrangedSubview(
-      ResumeListHeaderContentView(title: "닉네임", content: "윰")
-    )
-    self.contentStackView.addArrangedSubview(
-      ResumeListHeaderContentView(title: "생년월일", content: "1997.04.22")
-    )
   }
 
   required init?(coder: NSCoder) {
     fatalError()
+  }
+  
+  fileprivate func configure(user: User) {
+    if let name = user.name {
+      self.contentStackView.addArrangedSubview(
+        ResumeListHeaderContentView(title: "이름", content: name)
+      )
+    }
+    
+    self.contentStackView.addArrangedSubview(
+      ResumeListHeaderContentView(title: "전화번호", content: user.phoneNumber)
+    )
+    
+    self.contentStackView.addArrangedSubview(
+      ResumeListHeaderContentView(title: "닉네임", content: user.username)
+    )
+    
+    if let birthday = user.birthday {
+      self.contentStackView.addArrangedSubview(
+        ResumeListHeaderContentView(title: "생년월일", content: birthday)
+      )
+    }
   }
 
   // MARK: Layout

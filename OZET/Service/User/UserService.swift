@@ -12,6 +12,8 @@ protocol UserService: AnyObject {
   func requestAuthCode(phone: String) -> Observable<Date?>
   func sendAuthCode(phone: String, code: String) -> Observable<LoginResponse>
   func updateName(name: String) -> Observable<Bool>
+  func loadResume() -> Observable<Resume>
+  func loadMyInfo() -> Observable<User>
 }
 
 final class UserServiceImpl: UserService {
@@ -41,13 +43,23 @@ final class UserServiceImpl: UserService {
       .asObservable()
   }
   
-  
   func updateName(name: String) -> Observable<Bool> {
     self.userProvider.rx.request(.updateName(name: name))
       .map(User.self)
-      .debug()
       .map { $0.name != nil }
       .asObservable()
   }
   
+  func loadResume() -> Observable<Resume> {
+    self.userProvider.rx.request(.getResume)
+      .map(Resume.self)
+      .debug()
+      .asObservable()
+  }
+  
+  func loadMyInfo() -> Observable<User> {
+    self.userProvider.rx.request(.getMyInfo)
+      .map(User.self)
+      .asObservable()
+  }
 }

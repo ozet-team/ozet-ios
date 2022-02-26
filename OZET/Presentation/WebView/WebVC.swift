@@ -21,11 +21,11 @@ enum WebViewType {
   var path: String {
     switch self {
     case .all:
-      return "/list/all"
+      return "/#/list/all"
     case .recommend:
-      return "/list/recommend"
+      return "/#/list/recommend"
     case .detail(let id):
-      return "/recruitment/detail/\(id)"
+      return "/#/recruitment/detail/\(id)"
     }
   }
 }
@@ -39,10 +39,11 @@ final class WebVC: BaseVC {
   }
 
   private enum WebRequest: String {
-    case back = "back"
-    case swipe = "swipe"
-    case token = "token"
-    case login = "login"
+    case back
+    case swipe
+    case token
+    case login
+    case apply
   }
 
   private struct WebEvent: Decodable {
@@ -120,6 +121,10 @@ final class WebVC: BaseVC {
     navigation.isNavigationBarHidden = true
     self.present(navigation, animated: true, completion: nil)
   }
+  
+  private func presentApply() {
+    
+  }
 }
 
 extension WebVC: WKScriptMessageHandler {
@@ -146,6 +151,9 @@ extension WebVC: WKScriptMessageHandler {
       
     case .login:
       self.presentLogin()
+      
+    case .apply:
+      self.presentApply()
     }
   }
 }

@@ -12,6 +12,8 @@ enum UserAPI: TargetType {
   case authSMS(phone: String, code: String)
   case sendSMS(phone: String)
   case updateName(name: String)
+  case getResume
+  case getMyInfo
 
   var path: String {
     switch self {
@@ -22,6 +24,12 @@ enum UserAPI: TargetType {
       return "member/auth/passcode/"
       
     case .updateName:
+      return "member/user/me/"
+    
+    case .getResume:
+      return "member/user/me/resume/"
+      
+    case .getMyInfo:
       return "member/user/me/"
     }
   }
@@ -36,6 +44,12 @@ enum UserAPI: TargetType {
       
     case .updateName:
       return .patch
+      
+    case .getResume:
+      return .get
+      
+    case .getMyInfo:
+      return .get
     }
   }
 
@@ -61,6 +75,12 @@ enum UserAPI: TargetType {
         parameters: ["name": name],
         encoding: JSONEncoding.default
       )
+      
+    case .getResume:
+      return .requestPlain
+      
+    case .getMyInfo:
+      return .requestPlain
     }
   }
 }

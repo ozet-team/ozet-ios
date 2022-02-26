@@ -22,10 +22,10 @@ final class AddResumeItemVC: BaseVC {
   }
 
   // MARK: Properties
-  private let type: ResumeAddType
+  private let type: ResumeType
 
   // MARK: Initializer
-  init(type: ResumeAddType) {
+  init(type: ResumeType) {
     self.navigationBar = NavigationBar(title: type.title)
     self.type = type
     super.init()

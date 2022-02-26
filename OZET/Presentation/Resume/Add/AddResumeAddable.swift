@@ -6,7 +6,7 @@
 //  Copyright © 2021 app.OZET. All rights reserved.
 //
 
-enum ResumeAddType: CaseIterable {
+enum ResumeType: CaseIterable {
   case career
   case certification
   case school

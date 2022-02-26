@@ -16,12 +16,15 @@ final class MainVC: BaseVC, View {
   private let containerView = ScrollableStackView(spacing: 30)
   private let allList = MainRecruitPostListView(type: .all)
   private let recommendList = MainRecruitPostListView(type: .recommend)
+  
+  private let bannerView = UIView()
 
   private let resumeGuideButton = UIButton().then {
-    $0.setTitle("디자인이 없는 버튼\n비로그인 -> 로그인 화면\n로그인 -> 이력서 화면", for: .normal)
-    $0.setTitleColor(.ozet.blackWithDark, for: .normal)
-    $0.titleLabel?.textAlignment = .center
-    $0.titleLabel?.numberOfLines = 0
+    $0.setBackgroundImage(R.image.bannerResumeButton(), for: .normal)
+  }
+  
+  private let noticeButton = UIButton().then {
+    $0.setBackgroundImage(R.image.bannerNoticeButton(), for: .normal)
   }
   
   private let logoView = UIImageView().then {
@@ -52,9 +55,12 @@ final class MainVC: BaseVC, View {
     self.view.addSubview(self.titleView)
     self.view.addSubview(self.containerView)
     self.titleView.addSubview(self.logoView)
+    
+    self.bannerView.addSubview(self.resumeGuideButton)
+    self.bannerView.addSubview(self.noticeButton)
 
     self.containerView.addStackView([
-      self.resumeGuideButton,
+      self.bannerView,
       self.allList,
       self.recommendList
     ])
@@ -76,12 +82,21 @@ final class MainVC: BaseVC, View {
     }
 
     self.containerView.snp.makeConstraints { make in
-      make.top.equalTo(self.titleView.snp.bottom)
+      make.top.equalTo(self.titleView.snp.bottom).offset(20)
       make.leading.trailing.bottom.equalToSuperview()
     }
-
+    
     self.resumeGuideButton.snp.makeConstraints { make in
-      make.height.equalTo(150)
+      make.height.equalTo(self.view.snp.width).multipliedBy(0.55)
+      make.top.equalToSuperview()
+      make.leading.trailing.equalToSuperview().inset(20)
+    }
+    
+    self.noticeButton.snp.makeConstraints { make in
+      make.height.equalTo(self.view.snp.width).multipliedBy(0.26)
+      make.top.equalTo(self.resumeGuideButton.snp.bottom).offset(20)
+      make.bottom.equalToSuperview()
+      make.leading.trailing.equalToSuperview().inset(20)
     }
   }
 
@@ -100,6 +115,13 @@ final class MainVC: BaseVC, View {
       .withUnretained(self)
       .bind { (self, _) in
         self.presentResume()
+      }
+      .disposed(by: self.disposeBag)
+    
+    self.noticeButton.rx.tap
+      .withUnretained(self)
+      .bind { (self, _) in
+        self.presentNotice()
       }
       .disposed(by: self.disposeBag)
     
@@ -168,8 +190,22 @@ final class MainVC: BaseVC, View {
       self.presentLogin()
       return
     }
-    let vc = ResumeListVC()
+    let reactor = ResumeListReactor(
+      userService: UserServiceImpl(
+        userProvider: UserProvider()
+      )
+    )
+    let vc = ResumeListVC(reactor: reactor)
     self.navigationController?.pushViewController(vc, animated: true)
+  }
+  
+  private func presentNotice() {
+    let vc = IntroduceVC()
+    vc.modalPresentationStyle = .fullScreen
+    vc.dismissHandler = { [weak self] in
+      self?.presentResume()
+    }
+    self.present(vc, animated: true, completion: nil)
   }
   
   private func presentWebView(type: WebViewType) {

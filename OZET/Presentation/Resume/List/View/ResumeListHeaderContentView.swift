@@ -23,6 +23,11 @@ final class ResumeListHeaderContentView: BaseView {
     $0.font = .ozet.body1
     $0.textColor = .ozet.blackWithDark
   }
+  
+  var content: String? {
+    get { self.contentLabel.text }
+    set { self.contentLabel.text = newValue }
+  }
 
   // MARK: Init
   init(title: String?, content: String?) {
